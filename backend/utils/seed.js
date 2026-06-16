@@ -38,16 +38,16 @@ const skillsList = [
 ];
 
 const employees = [
-  { id: 'emp-1', employeeId: 'DSC001', fullName: 'Muhammad Imran', email: 'requester@descon.com', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'Project Coordinator', systemRole: 'Manager', pcpRole: 'Requester', active: true, skills: ['Project Management', 'HSE'], hourlyRate: 65, monthlySalary: 10400, capacityHours: 40, availability: 16, status: 'Allocated' },
-  { id: 'emp-2', employeeId: 'DSC002', fullName: 'Fatima Bukhari', email: 'approver@descon.com', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'BU Head', systemRole: 'Manager', pcpRole: 'Approver', active: true, skills: ['Project Management', 'HSE'], hourlyRate: 110, monthlySalary: 17600, capacityHours: 40, availability: 8, status: 'Fully Allocated' },
-  { id: 'emp-3', employeeId: 'DSC003', fullName: 'Hassan Raza', email: 'hr@descon.com', department: 'Corporate HR', businessUnit: 'Corporate HR', designation: 'HR Manager', systemRole: 'HR', active: true, skills: ['Project Management', 'Human Resources'], hourlyRate: 95, monthlySalary: 15200, capacityHours: 40, availability: 12, status: 'Allocated' },
-  { id: 'emp-4', employeeId: 'DSC004', fullName: 'Usman Malik', email: 'admin@descon.com', department: 'Corporate HR', businessUnit: 'Corporate HR', designation: 'HR Systems Admin', systemRole: 'Admin', pcpRole: 'Admin', active: true, skills: ['Project Management', 'Logistics', 'React', 'TypeScript'], hourlyRate: 90, monthlySalary: 14400, capacityHours: 40, availability: 10, status: 'Allocated' },
-  { id: 'emp-5', employeeId: 'DSC005', fullName: 'Ayesha Siddiqui', email: 'executive@descon.com', department: 'Corporate HR', businessUnit: 'Corporate HR', designation: 'VP Operations', systemRole: 'Manager', pcpRole: 'Executive', active: true, skills: ['Project Management', 'Strategic Planning'], hourlyRate: 120, monthlySalary: 19200, capacityHours: 40, availability: 20, status: 'Allocated' },
-  { id: 'emp-6', employeeId: 'DSC006', fullName: 'Bilal Ahmed', email: 'bilal.ahmed@descon.com', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'Site Engineer', systemRole: 'Manager', skills: ['Mechanical', 'HSE', 'Project Management'], hourlyRate: 85, monthlySalary: 13600, capacityHours: 40, availability: 18, status: 'Allocated' },
-  { id: 'emp-7', employeeId: 'DSC007', fullName: 'Hamza Sheikh', email: 'hamza.sheikh@descon.com', department: 'MEP – East', businessUnit: 'MEP – East', designation: 'MEP Manager', systemRole: 'Manager', pcpRole: 'Approver', active: true, skills: ['Electrical', 'Piping', 'Project Management'], hourlyRate: 100, monthlySalary: 16000, capacityHours: 40, availability: 14, status: 'Allocated' },
-  { id: 'emp-8', employeeId: 'DSC008', fullName: 'Zainab Khattak', email: 'zainab.khattak@descon.com', department: 'MEP – East', businessUnit: 'MEP – East', designation: 'Electrician', systemRole: 'Manager', skills: ['Electrical'], hourlyRate: 55, monthlySalary: 8800, capacityHours: 40, availability: 24, status: 'Available' },
-  { id: 'emp-9', employeeId: 'DSC009', fullName: 'Tariq Mehmood', email: 'tariq.mehmood@descon.com', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'Welder', systemRole: 'Manager', skills: ['Welding', 'Rigging'], hourlyRate: 50, monthlySalary: 8000, capacityHours: 40, availability: 22, status: 'Available' },
-  { id: 'emp-10', employeeId: 'DSC010', fullName: 'Farah Qureshi', email: 'farah.qureshi@descon.com', department: 'Logistics – South', businessUnit: 'Logistics – South', designation: 'Rigger', systemRole: 'Manager', skills: ['Rigging', 'Scaffolding'], hourlyRate: 48, monthlySalary: 7680, capacityHours: 40, availability: 0, status: 'On Leave' },
+  { id: 'emp-1', employeeId: 'DSC001', fullName: 'Muhammad Imran', email: 'requester@wms.demo', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'Project Coordinator', systemRole: 'Manager', pcpRole: 'Requester', active: true, skills: ['Project Management', 'HSE'], hourlyRate: 65, monthlySalary: 10400, capacityHours: 40, availability: 16, status: 'Allocated' },
+  { id: 'emp-2', employeeId: 'DSC002', fullName: 'Fatima Bukhari', email: 'approver@wms.demo', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'BU Head', systemRole: 'Manager', pcpRole: 'Approver', active: true, skills: ['Project Management', 'HSE'], hourlyRate: 110, monthlySalary: 17600, capacityHours: 40, availability: 8, status: 'Fully Allocated' },
+  { id: 'emp-3', employeeId: 'DSC003', fullName: 'Hassan Raza', email: 'hr@wms.demo', department: 'Corporate HR', businessUnit: 'Corporate HR', designation: 'HR Manager', systemRole: 'HR', active: true, skills: ['Project Management', 'Human Resources'], hourlyRate: 95, monthlySalary: 15200, capacityHours: 40, availability: 12, status: 'Allocated' },
+  { id: 'emp-4', employeeId: 'DSC004', fullName: 'Usman Malik', email: 'admin@wms.demo', department: 'Corporate HR', businessUnit: 'Corporate HR', designation: 'HR Systems Admin', systemRole: 'Admin', pcpRole: 'Admin', active: true, skills: ['Project Management', 'Logistics', 'React', 'TypeScript'], hourlyRate: 90, monthlySalary: 14400, capacityHours: 40, availability: 10, status: 'Allocated' },
+  { id: 'emp-5', employeeId: 'DSC005', fullName: 'Ayesha Siddiqui', email: 'executive@wms.demo', department: 'Corporate HR', businessUnit: 'Corporate HR', designation: 'VP Operations', systemRole: 'Manager', pcpRole: 'Executive', active: true, skills: ['Project Management', 'Strategic Planning'], hourlyRate: 120, monthlySalary: 19200, capacityHours: 40, availability: 20, status: 'Allocated' },
+  { id: 'emp-6', employeeId: 'DSC006', fullName: 'Bilal Ahmed', email: 'bilal.ahmed@wms.demo', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'Site Engineer', systemRole: 'Manager', skills: ['Mechanical', 'HSE', 'Project Management'], hourlyRate: 85, monthlySalary: 13600, capacityHours: 40, availability: 18, status: 'Allocated' },
+  { id: 'emp-7', employeeId: 'DSC007', fullName: 'Hamza Sheikh', email: 'hamza.sheikh@wms.demo', department: 'MEP – East', businessUnit: 'MEP – East', designation: 'MEP Manager', systemRole: 'Manager', pcpRole: 'Approver', active: true, skills: ['Electrical', 'Piping', 'Project Management'], hourlyRate: 100, monthlySalary: 16000, capacityHours: 40, availability: 14, status: 'Allocated' },
+  { id: 'emp-8', employeeId: 'DSC008', fullName: 'Zainab Khattak', email: 'zainab.khattak@wms.demo', department: 'MEP – East', businessUnit: 'MEP – East', designation: 'Electrician', systemRole: 'Manager', skills: ['Electrical'], hourlyRate: 55, monthlySalary: 8800, capacityHours: 40, availability: 24, status: 'Available' },
+  { id: 'emp-9', employeeId: 'DSC009', fullName: 'Tariq Mehmood', email: 'tariq.mehmood@wms.demo', department: 'Construction – North', businessUnit: 'Construction – North', designation: 'Welder', systemRole: 'Manager', skills: ['Welding', 'Rigging'], hourlyRate: 50, monthlySalary: 8000, capacityHours: 40, availability: 22, status: 'Available' },
+  { id: 'emp-10', employeeId: 'DSC010', fullName: 'Farah Qureshi', email: 'farah.qureshi@wms.demo', department: 'Logistics – South', businessUnit: 'Logistics – South', designation: 'Rigger', systemRole: 'Manager', skills: ['Rigging', 'Scaffolding'], hourlyRate: 48, monthlySalary: 7680, capacityHours: 40, availability: 0, status: 'On Leave' },
 ];
 
 const projects = [
@@ -88,7 +88,7 @@ const projects = [
     ],
   },
   {
-    id: 'proj-5', projectId: 'PRJ-HSE', name: 'HSE Compliance Program', client: 'Descon Corporate', description: 'Group-wide HSE audit and compliance remediation',
+    id: 'proj-5', projectId: 'PRJ-HSE', name: 'HSE Compliance Program', client: 'WMS Corporate', description: 'Group-wide HSE audit and compliance remediation',
     projectManager: 'Usman Malik', projectManagerId: 'emp-4', startDate: '2024-10-01', endDate: '2025-05-31',
     status: 'Completed', budget: 450000, revenue: 520000, priority: 'High',
     phases: [
@@ -289,6 +289,13 @@ async function prepareEmployeesWithPasswords() {
 }
 
 async function seed() {
+  if (process.env.ALLOW_SEED !== 'true') {
+    console.error(
+      'Seeding is disabled. Set ALLOW_SEED=true in backend/.env only when you intentionally want to load demo data.',
+    );
+    process.exit(1);
+  }
+
   await connectDB();
 
   const employeesWithAuth = await prepareEmployeesWithPasswords();
@@ -328,11 +335,11 @@ async function seed() {
   await disconnectDB();
   console.log('\n✅ MongoDB seeded successfully!');
   console.log('\nDemo login (email / password):');
-  console.log('  Requester  → requester@descon.com / Requester@123');
-  console.log('  Approver   → approver@descon.com / Approver@123');
-  console.log('  Admin      → admin@descon.com / Admin@123');
-  console.log('  Executive  → executive@descon.com / Executive@123');
-  console.log('  HR         → hr@descon.com / Hr@123');
+  console.log('  Requester  → requester@wms.demo / Requester@123');
+  console.log('  Approver   → approver@wms.demo / Approver@123');
+  console.log('  Admin      → admin@wms.demo / Admin@123');
+  console.log('  Executive  → executive@wms.demo / Executive@123');
+  console.log('  HR         → hr@wms.demo / Hr@123');
 }
 
 seed().catch((err) => {

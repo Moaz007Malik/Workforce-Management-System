@@ -65,7 +65,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'descon-auth-session',
+      name: 'wms-auth-session',
       partialize: (s) => ({ token: s.token }),
     },
   ),

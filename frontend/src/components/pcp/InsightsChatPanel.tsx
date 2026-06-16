@@ -10,6 +10,7 @@ import {
   processInsightsMessage,
   type InsightsData,
 } from '@/lib/insightsEngine'
+import { CHATBOT_NAME } from '@/lib/branding'
 import { cn } from '@/lib/utils'
 
 interface ChatMessage {
@@ -107,7 +108,7 @@ export function InsightsChatPanel({ insights, className, pendingQuery, onPending
           <Sparkles className="h-4 w-4" />
         </div>
         <div>
-          <p className="text-sm font-semibold">CORVI — AI Insights</p>
+          <p className="text-sm font-semibold">{CHATBOT_NAME} — AI Insights</p>
           <p className="text-[10px] text-muted-foreground">Rule-based forecasts & sourcing guidance</p>
         </div>
       </div>

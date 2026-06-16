@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { APP_NAME } from '@/lib/branding'
 import type { DashboardMetrics } from '@/types'
 import { formatCurrency, formatPercent } from '@/lib/utils'
 
@@ -18,7 +19,7 @@ export interface DashboardPdfOptions {
 }
 
 function defaultFileName() {
-  return `descon-dashboard-${new Date().toISOString().slice(0, 10)}.pdf`
+  return `wms-dashboard-${new Date().toISOString().slice(0, 10)}.pdf`
 }
 
 export function buildDashboardPdf(metrics: DashboardMetrics, options?: DashboardPdfOptions): jsPDF {
@@ -27,7 +28,7 @@ export function buildDashboardPdf(metrics: DashboardMetrics, options?: Dashboard
   let y = 18
 
   doc.setFontSize(18)
-  doc.text('Descon — Personnel Cost Planning Report', 14, y)
+  doc.text(`${APP_NAME} — Dashboard Report`, 14, y)
   y += 7
   doc.setFontSize(10)
   doc.setTextColor(90)
@@ -141,7 +142,7 @@ export function buildDashboardPdf(metrics: DashboardMetrics, options?: Dashboard
     doc.setPage(i)
     doc.setFontSize(8)
     doc.setTextColor(130)
-    doc.text('Powered By Corvit', doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() - 8, { align: 'center' })
+    doc.text(APP_NAME, doc.internal.pageSize.getWidth() / 2, doc.internal.pageSize.getHeight() - 8, { align: 'center' })
   }
 
   return doc

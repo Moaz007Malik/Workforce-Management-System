@@ -1,6 +1,6 @@
-# ProFlow — Project Management & Resource Planning System
+# Workforce Management System
 
-A modern SaaS-style MERN prototype for enterprise project management, resource planning, budget tracking, and executive reporting.
+A modern SaaS-style MERN platform for enterprise workforce management, resource planning, budget tracking, and executive reporting.
 
 ![Stack](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Express](https://img.shields.io/badge/Express-4-green) ![Tailwind](https://img.shields.io/badge/Tailwind-4-blue)
 
@@ -66,10 +66,10 @@ npm run dev
 2. Create a database user (username + password)
 3. Allow your IP in **Network Access** (or `0.0.0.0/0` for development)
 4. Copy the connection string from **Connect → Drivers**
-5. Paste it into `backend/.env` as `MONGODB_URI`, replacing `<password>` and setting the database name (e.g. `promgmt`)
+5. Paste it into `backend/.env` as `MONGODB_URI`, replacing `<password>` and setting the database name (e.g. `wms`)
 
 ```env
-MONGODB_URI=mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/promgmt?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/wms?retryWrites=true&w=majority
 ```
 
 - **Frontend**: http://localhost:5173
@@ -86,7 +86,7 @@ MONGODB_URI=mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/promgmt?r
 ## Project Structure
 
 ```
-ProMgmtSstm/
+Workforce-Management-System/
 ├── backend/
 │   ├── config/            # MongoDB connection
 │   ├── models/            # Mongoose schemas
@@ -162,8 +162,8 @@ npm run seed
 | `FRONTEND_URL` | `https://your-frontend.vercel.app` (set after frontend deploy) |
 | `NODE_ENV` | `production` |
 
-4. Deploy → note the URL, e.g. `https://promgmt-api.vercel.app`
-5. Test: `https://promgmt-api.vercel.app/health`
+4. Deploy → note the URL, e.g. `https://wms-api.vercel.app`
+5. Test: `https://wms-api.vercel.app/health`
 
 ### 3. Frontend project (Vercel)
 
@@ -173,9 +173,9 @@ npm run seed
 
 | Variable | Value |
 |----------|--------|
-| `VITE_API_URL` | `https://promgmt-api.vercel.app/api` |
+| `VITE_API_URL` | `https://wms-api.vercel.app/api` |
 
-4. Deploy → note the URL, e.g. `https://promgmt.vercel.app`
+4. Deploy → note the URL, e.g. `https://wms.vercel.app`
 5. Go back to the **backend** Vercel project → update `FRONTEND_URL` to your frontend URL → **Redeploy**
 
 ### Local environment files
@@ -195,5 +195,3 @@ cp frontend/.env.example frontend/.env
 ## License
 
 MIT — Prototype for demonstration purposes.
-# Project-Management-System
-# Workforce-Management-System

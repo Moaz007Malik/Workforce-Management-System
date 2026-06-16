@@ -513,7 +513,7 @@ export function PcpAdmin() {
                     type="email"
                     value={newUser.email}
                     onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                    placeholder="name@descon.com"
+                    placeholder="name@company.com"
                   />
                 </div>
                 <div>

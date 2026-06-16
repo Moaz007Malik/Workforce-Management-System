@@ -18,7 +18,7 @@ export async function sendDashboardReportEmail({ to, pdfBase64, fileName }) {
   if (!pdfBase64) throw new Error('PDF attachment is required');
 
   const attachment = {
-    filename: fileName || 'descon-dashboard-report.pdf',
+    filename: fileName || 'wms-dashboard-report.pdf',
     content: Buffer.from(pdfBase64, 'base64'),
     contentType: 'application/pdf',
   };
@@ -36,9 +36,9 @@ export async function sendDashboardReportEmail({ to, pdfBase64, fileName }) {
   await transporter.sendMail({
     from: process.env.SMTP_FROM || process.env.SMTP_USER,
     to: to.trim(),
-    subject: 'Descon Dashboard Report',
-    text: 'Please find your Descon dashboard report attached.',
-    html: '<p>Please find your <strong>Descon dashboard report</strong> attached.</p>',
+    subject: 'Workforce Management System — Dashboard Report',
+    text: 'Please find your Workforce Management System dashboard report attached.',
+    html: '<p>Please find your <strong>Workforce Management System dashboard report</strong> attached.</p>',
     attachments: [attachment],
   });
 

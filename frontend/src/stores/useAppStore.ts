@@ -66,11 +66,17 @@ export const useAppStore = create<AppState>()(
       toggleNotificationPref: (key) =>
         set((s) => ({ notificationPrefs: { ...s.notificationPrefs, [key]: !s.notificationPrefs[key] } })),
     }),
-    { name: 'app-settings', partialize: (s) => ({
+    { name: 'app-settings', version: 1, partialize: (s) => ({
       darkMode: s.darkMode,
       colorTheme: s.colorTheme,
       sidebarOpen: s.sidebarOpen,
       notificationPrefs: s.notificationPrefs,
-    }) },
+    }), migrate: (persisted) => {
+      const state = persisted as { colorTheme?: string }
+      if (state.colorTheme === 'descon') {
+        state.colorTheme = 'wms'
+      }
+      return state as typeof persisted
+    } },
   )
 )

@@ -1,4 +1,5 @@
 import { api } from '@/lib/api'
+import { CHATBOT_NAME } from './branding'
 import { formatCurrency } from '@/lib/utils'
 import type { Employee, Project, Task } from '@/types'
 
@@ -283,7 +284,7 @@ function formatEmployeesBySkills(employees: Employee[], skills: string[]): strin
   return lines.join('\n')
 }
 
-export const CHATBOT_NAME = 'CORVI - The AI Assistant'
+export { CHATBOT_NAME }
 
 function mdTable(rows: Record<string, string | number>[]): string {
   if (!rows.length) return ''
@@ -315,12 +316,12 @@ export function tryDashboardFaq(message: string): { matched: boolean; reply: str
       reply: [
         '## Active Projects & Budgets',
         '',
-        '**3** active projects in the Descon portfolio.',
+        '**3** active projects in the workforce portfolio.',
         mdTable(rows),
         '',
         `**Combined budget:** ${formatCurrency(16700000)} · **Combined revenue:** ${formatCurrency(19500000)}`,
         '',
-        '_Source: Descon project database · Jun 2026_',
+        '_Source: WMS project database · Jun 2026_',
       ].join('\n'),
     }
   }

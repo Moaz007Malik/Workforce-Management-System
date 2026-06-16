@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { CHATBOT_NAME } from '@/lib/branding'
 import { Link, useNavigate } from 'react-router-dom'
 import { Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, ComposedChart, Legend } from 'recharts'
 import { MessageCircle, Sparkles } from 'lucide-react'
@@ -46,7 +47,7 @@ export function PcpAiInsights() {
             <span className="text-xs font-semibold uppercase tracking-wide">AI Insights & Forecasts</span>
           </div>
           <h1 className="text-xl font-bold sm:text-2xl">Workforce Intelligence</h1>
-          <p className="text-muted-foreground">Sourcing recommendations, headcount & cost projections — powered by CORVI (rule-based)</p>
+          <p className="text-muted-foreground">Sourcing recommendations, headcount & cost projections — powered by {CHATBOT_NAME} (rule-based)</p>
         </div>
         <Button variant="outline" size="sm" onClick={() => navigate('/pcp/executive')}>
           View Executive Dashboard
@@ -82,7 +83,7 @@ export function PcpAiInsights() {
                     </Link>
                     <Button size="sm" variant="outline" onClick={() => setChatQuery(n.title)}>
                       <MessageCircle className="mr-1 h-3.5 w-3.5" />
-                      Ask CORVI
+                      Ask {CHATBOT_NAME}
                     </Button>
                   </div>
                 </div>

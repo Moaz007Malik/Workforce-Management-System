@@ -4,6 +4,7 @@ import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { filterNavByRole, getPcpNavForUser } from '@/lib/roles'
 import { useEffectiveRoles } from '@/lib/useEffectiveRoles'
+import { APP_NAME, APP_SHORT_NAME, APP_TAGLINE } from '@/lib/branding'
 import { useAppStore } from '@/stores/useAppStore'
 import { useAuthStore } from '@/stores/useAuthStore'
 
@@ -55,15 +56,15 @@ export function Sidebar() {
       )}
     >
       <div className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-3 sm:h-16 sm:px-4">
-        <img src="/logo.png" alt="Descon" className="h-8 w-8 shrink-0 rounded-lg object-contain sm:h-9 sm:w-9" />
+        <img src="/logo.svg" alt={APP_NAME} className="h-8 w-8 shrink-0 rounded-lg object-contain sm:h-9 sm:w-9" />
         <div
           className={cn(
             'min-w-0 flex-1',
             !sidebarOpen && 'lg:hidden',
           )}
         >
-          <h1 className="truncate text-sm font-bold tracking-tight">Descon</h1>
-          <p className="truncate text-[10px] text-muted-foreground">Personnel Cost Planning</p>
+          <h1 className="truncate text-sm font-bold tracking-tight">{APP_SHORT_NAME}</h1>
+          <p className="truncate text-[10px] text-muted-foreground">{APP_TAGLINE}</p>
           {pcpRole && (
             <p className="truncate text-[10px] font-medium text-primary">{pcpRole} view</p>
           )}

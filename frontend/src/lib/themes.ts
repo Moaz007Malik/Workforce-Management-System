@@ -1,4 +1,4 @@
-export type ColorThemeId = 'descon' | 'ocean' | 'forest' | 'slate' | 'sunset'
+export type ColorThemeId = 'wms' | 'ocean' | 'forest' | 'slate' | 'sunset'
 
 type ThemeVars = Record<string, string>
 
@@ -45,25 +45,25 @@ const baseDark: ThemeVars = {
 
 export const COLOR_THEMES: ColorTheme[] = [
   {
-    id: 'descon',
-    name: 'Descon',
-    description: 'Corporate red with blue accents',
-    swatch: ['#E31E24', '#2A6EBB', '#F4F6F9'],
+    id: 'wms',
+    name: 'Workforce',
+    description: 'Corporate blue with teal accents',
+    swatch: ['#2563EB', '#0891B2', '#F0F9FF'],
     light: {
       ...baseLight,
-      primary: '358 79% 51%',
+      primary: '221 83% 53%',
       'primary-foreground': '0 0% 100%',
-      accent: '212 63% 45%',
+      accent: '188 94% 43%',
       'accent-foreground': '210 20% 98%',
-      ring: '358 79% 51%',
+      ring: '221 83% 53%',
     },
     dark: {
       ...baseDark,
-      primary: '358 79% 55%',
+      primary: '217 91% 60%',
       'primary-foreground': '0 0% 100%',
-      accent: '212 63% 50%',
+      accent: '188 86% 53%',
       'accent-foreground': '210 20% 98%',
-      ring: '358 79% 55%',
+      ring: '217 91% 60%',
     },
   },
   {
@@ -166,7 +166,7 @@ export const COLOR_THEMES: ColorTheme[] = [
   },
 ]
 
-export const DEFAULT_COLOR_THEME: ColorThemeId = 'descon'
+export const DEFAULT_COLOR_THEME: ColorThemeId = 'wms'
 
 export function getColorTheme(id: ColorThemeId): ColorTheme {
   return COLOR_THEMES.find((t) => t.id === id) ?? COLOR_THEMES[0]

@@ -1,4 +1,5 @@
 import { api } from '@/lib/api'
+import { CHATBOT_NAME } from '@/lib/branding'
 import { formatCurrency } from '@/lib/utils'
 
 export interface InsightNeed {
@@ -62,7 +63,7 @@ function mdTable(rows: Record<string, string | number>[]): string {
 
 function helpText(): string {
   return [
-    '## CORVI — AI Insights',
+    `## ${CHATBOT_NAME} — AI Insights`,
     '',
     'Ask me about:',
     '- **Weekly summary** — "summarize this week"',
@@ -79,7 +80,7 @@ export async function processInsightsMessage(message: string, data?: InsightsDat
   if (!lower) return { text: 'Please type a question about forecasts or sourcing needs.' }
 
   if (lower === 'help' || lower === 'hi' || lower === 'hello') {
-    return { text: helpText(), source: 'CORVI — rule-based insights engine' }
+    return { text: helpText(), source: `${CHATBOT_NAME} — rule-based insights engine` }
   }
 
   if (lower.startsWith('tell me about:') || lower.startsWith('tell me about ')) {
@@ -259,13 +260,13 @@ export async function processInsightsMessage(message: string, data?: InsightsDat
 
   return {
     text: `${helpText()}\n\n_I didn't match "${message}" — try a suggestion below._`,
-    source: 'CORVI — rule-based insights engine',
+    source: `${CHATBOT_NAME} — rule-based insights engine`,
   }
 }
 
 export function getInsightsWelcome(): string {
   return [
-    'Hi! I\'m **CORVI**. I can explain the forecasts and sourcing recommendations on this page — all answers are generated from your PCP and workforce data.',
+    `Hi! I'm **${CHATBOT_NAME}**. I can explain the forecasts and sourcing recommendations on this page — all answers are generated from your PCP and workforce data.`,
     '',
     'Try: *"Show identified needs"* or *"Which cost centers are at risk?"*',
   ].join('\n')

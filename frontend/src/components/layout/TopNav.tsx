@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { useAppStore } from '@/stores/useAppStore'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { useNotificationStore } from '@/stores/useNotificationStore'
+import { APP_SHORT_NAME, CHATBOT_NAME } from '@/lib/branding'
 import { cn } from '@/lib/utils'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -22,7 +23,7 @@ export function TopNav() {
   const [searchQuery, setSearchQuery] = useState('')
   const openChat = useChatBotStore((s) => s.openChat)
 
-  const handleAskCorvi = () => {
+  const handleAskAssistant = () => {
     openChat(searchQuery)
   }
 
@@ -45,7 +46,7 @@ export function TopNav() {
         >
           {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
-        <span className="min-w-0 flex-1 truncate text-sm font-semibold">Descon</span>
+        <span className="min-w-0 flex-1 truncate text-sm font-semibold">{APP_SHORT_NAME}</span>
         <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0" onClick={toggleDarkMode}>
           {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
@@ -106,13 +107,13 @@ export function TopNav() {
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
-                handleAskCorvi()
+                handleAskAssistant()
               }
             }}
           />
           <button
             type="button"
-            onClick={handleAskCorvi}
+            onClick={handleAskAssistant}
             className="absolute right-1.5 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-[10px] font-semibold text-primary"
           >
             <Sparkles className="h-3 w-3" />
@@ -133,17 +134,17 @@ export function TopNav() {
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
-                handleAskCorvi()
+                handleAskAssistant()
               }
             }}
           />
           <button
             type="button"
-            onClick={handleAskCorvi}
+            onClick={handleAskAssistant}
             className="absolute right-1.5 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-md bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary transition-colors hover:bg-primary/15"
           >
             <Sparkles className="h-3.5 w-3.5" />
-            Ask CORVI
+            Ask {CHATBOT_NAME}
           </button>
         </div>
 

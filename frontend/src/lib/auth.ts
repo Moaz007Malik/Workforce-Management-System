@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'descon-auth-token'
+const TOKEN_KEY = 'wms-auth-token'
 
 export function setAuthToken(token: string) {
   localStorage.setItem(TOKEN_KEY, token)

@@ -1,8 +1,8 @@
 {
-  "name": "promgmt-system",
+  "name": "workforce-management-system",
   "version": "1.0.0",
   "private": true,
-  "description": "Modern Project Management & Resource Planning System",
+  "description": "Workforce Management System — enterprise workforce and resource planning",
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run dev",

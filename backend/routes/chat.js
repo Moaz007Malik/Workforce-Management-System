@@ -93,7 +93,7 @@ router.post('/', optionalAuth, async (req, res) => {
 
     res.json({
       text: result.text,
-      source: `Groq (${result.model}) · Descon database snapshot`,
+      source: `Groq (${result.model}) · WMS database snapshot`,
       links,
       ai: true,
     });

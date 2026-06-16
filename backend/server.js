@@ -14,7 +14,7 @@ async function start() {
   }
 
   app.listen(PORT, () => {
-    console.log(`🚀 ProMgmt API running on http://localhost:${PORT}`);
+    console.log(`🚀 Workforce Management System API running on http://localhost:${PORT}`);
   });
 }
 

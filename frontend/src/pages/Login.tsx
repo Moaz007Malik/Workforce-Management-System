@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { APP_NAME, APP_TAGLINE } from '@/lib/branding'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 export function Login() {
@@ -44,12 +45,12 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-white to-red-50/40 p-4 dark:from-slate-950 dark:via-background dark:to-red-950/20">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/40 p-4 dark:from-slate-950 dark:via-background dark:to-blue-950/20">
       <div className="w-full max-w-md space-y-4 animate-fade-in min-w-0 sm:space-y-6">
         <div className="text-center">
-          <img src="/logo.png" alt="Descon" className="mx-auto mb-4 h-14 w-14 rounded-xl object-contain shadow-sm" />
-          <h1 className="text-xl font-bold sm:text-2xl tracking-tight">Descon</h1>
-          <p className="text-sm text-muted-foreground">Personnel Cost Planning</p>
+          <img src="/logo.svg" alt={APP_NAME} className="mx-auto mb-4 h-14 w-14 rounded-xl object-contain shadow-sm" />
+          <h1 className="text-xl font-bold sm:text-2xl tracking-tight">{APP_NAME}</h1>
+          <p className="text-sm text-muted-foreground">{APP_TAGLINE}</p>
         </div>
 
         <Card className="border-border/80 shadow-xl">
@@ -65,7 +66,7 @@ export function Login() {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="name@descon.com"
+                  placeholder="name@company.com"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(null) }}
                   required
@@ -96,7 +97,7 @@ export function Login() {
           </CardContent>
         </Card>
 
-        <p className="text-center text-xs text-muted-foreground">Powered By Corvit</p>
+        <p className="text-center text-xs text-muted-foreground">{APP_NAME}</p>
       </div>
     </div>
   )

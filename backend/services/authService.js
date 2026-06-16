@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'descon-promgmt-dev-secret-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET || 'wms-dev-secret-change-in-production';
 const JWT_EXPIRES = process.env.JWT_EXPIRES || '7d';
 
 export function defaultPasswordForRole(systemRole) {

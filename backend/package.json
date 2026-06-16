@@ -1,7 +1,7 @@
 {
-  "name": "promgmt-backend",
+  "name": "wms-backend",
   "version": "1.0.0",
-  "description": "Project Management System API",
+  "description": "Workforce Management System API",
   "main": "server.js",
   "type": "module",
   "scripts": {
