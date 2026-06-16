@@ -1,0 +1,191 @@
+[
+  {
+    "id": "proj-1",
+    "projectId": "PRJ001",
+    "name": "Project Alpha",
+    "client": "TechCorp Inc.",
+    "description": "Enterprise resource planning system modernization",
+    "projectManager": "Emily Rodriguez",
+    "projectManagerId": "emp-4",
+    "startDate": "2025-01-15",
+    "endDate": "2026-06-30",
+    "status": "Active",
+    "budget": 500000,
+    "revenue": 750000,
+    "priority": "High",
+    "phases": [
+      {
+        "id": "phase-1-1",
+        "name": "Discovery",
+        "milestones": [
+          {
+            "id": "ms-1-1",
+            "name": "Requirements Complete",
+            "dueDate": "2025-03-01"
+          }
+        ]
+      },
+      {
+        "id": "phase-1-2",
+        "name": "Development",
+        "milestones": [
+          {
+            "id": "ms-1-2",
+            "name": "MVP Release",
+            "dueDate": "2025-09-01"
+          },
+          {
+            "id": "ms-1-3",
+            "name": "Beta Launch",
+            "dueDate": "2026-01-15"
+          }
+        ]
+      },
+      {
+        "id": "phase-1-3",
+        "name": "Deployment",
+        "milestones": [
+          {
+            "id": "ms-1-4",
+            "name": "Production Go-Live",
+            "dueDate": "2026-06-30"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "proj-2",
+    "projectId": "PRJ002",
+    "name": "Cloud Migration",
+    "client": "FinanceHub Ltd.",
+    "description": "Migrate legacy systems to AWS cloud infrastructure",
+    "projectManager": "Sarah Chen",
+    "projectManagerId": "emp-2",
+    "startDate": "2025-03-01",
+    "endDate": "2025-12-31",
+    "status": "Active",
+    "budget": 320000,
+    "revenue": 480000,
+    "priority": "High",
+    "phases": [
+      {
+        "id": "phase-2-1",
+        "name": "Assessment",
+        "milestones": [
+          {
+            "id": "ms-2-1",
+            "name": "Architecture Review",
+            "dueDate": "2025-04-15"
+          }
+        ]
+      },
+      {
+        "id": "phase-2-2",
+        "name": "Migration",
+        "milestones": [
+          {
+            "id": "ms-2-2",
+            "name": "Phase 1 Migration",
+            "dueDate": "2025-08-01"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "proj-3",
+    "projectId": "PRJ003",
+    "name": "Mobile App Redesign",
+    "client": "RetailMax",
+    "description": "Complete redesign of customer-facing mobile application",
+    "projectManager": "Marcus Williams",
+    "projectManagerId": "emp-3",
+    "startDate": "2025-02-01",
+    "endDate": "2025-10-31",
+    "status": "Active",
+    "budget": 180000,
+    "revenue": 270000,
+    "priority": "Medium",
+    "phases": [
+      {
+        "id": "phase-3-1",
+        "name": "Design",
+        "milestones": [
+          {
+            "id": "ms-3-1",
+            "name": "Design System",
+            "dueDate": "2025-04-01"
+          }
+        ]
+      },
+      {
+        "id": "phase-3-2",
+        "name": "Development",
+        "milestones": [
+          {
+            "id": "ms-3-2",
+            "name": "App Store Release",
+            "dueDate": "2025-10-31"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "proj-4",
+    "projectId": "PRJ004",
+    "name": "Data Analytics Platform",
+    "client": "InsightCo",
+    "description": "Build real-time analytics dashboard and reporting engine",
+    "projectManager": "Emily Rodriguez",
+    "projectManagerId": "emp-4",
+    "startDate": "2025-04-01",
+    "endDate": "2026-03-31",
+    "status": "Planned",
+    "budget": 420000,
+    "revenue": 600000,
+    "priority": "Medium",
+    "phases": [
+      {
+        "id": "phase-4-1",
+        "name": "Planning",
+        "milestones": [
+          {
+            "id": "ms-4-1",
+            "name": "Data Model Approved",
+            "dueDate": "2025-06-01"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "proj-5",
+    "projectId": "PRJ005",
+    "name": "Security Audit",
+    "client": "SecureBank",
+    "description": "Comprehensive security assessment and remediation",
+    "projectManager": "David Okonkwo",
+    "projectManagerId": "emp-7",
+    "startDate": "2024-10-01",
+    "endDate": "2025-05-31",
+    "status": "Completed",
+    "budget": 95000,
+    "revenue": 140000,
+    "priority": "High",
+    "phases": [
+      {
+        "id": "phase-5-1",
+        "name": "Audit",
+        "milestones": [
+          {
+            "id": "ms-5-1",
+            "name": "Final Report",
+            "dueDate": "2025-05-31"
+          }
+        ]
+      }
+    ]
+  }
+]

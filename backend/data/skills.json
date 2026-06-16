@@ -1,0 +1,52 @@
+[
+  {
+    "id": "sk-1",
+    "name": "React",
+    "category": "Frontend"
+  },
+  {
+    "id": "sk-2",
+    "name": "Node.js",
+    "category": "Backend"
+  },
+  {
+    "id": "sk-3",
+    "name": "TypeScript",
+    "category": "Language"
+  },
+  {
+    "id": "sk-4",
+    "name": "Python",
+    "category": "Language"
+  },
+  {
+    "id": "sk-5",
+    "name": "AWS",
+    "category": "Cloud"
+  },
+  {
+    "id": "sk-6",
+    "name": "UI/UX Design",
+    "category": "Design"
+  },
+  {
+    "id": "sk-7",
+    "name": "Project Management",
+    "category": "Management"
+  },
+  {
+    "id": "sk-8",
+    "name": "DevOps",
+    "category": "Infrastructure"
+  },
+  {
+    "id": "sk-9",
+    "name": "SQL",
+    "category": "Database"
+  },
+  {
+    "id": "sk-10",
+    "name": "Agile/Scrum",
+    "category": "Methodology"
+  }
+]

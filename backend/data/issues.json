@@ -1,0 +1,92 @@
+[
+  {
+    "id": "issue-1",
+    "projectId": "proj-1",
+    "issue": "API response time exceeds SLA",
+    "owner": "Ahmed Khan",
+    "status": "In Progress",
+    "resolution": "Implementing caching layer",
+    "priority": "High"
+  },
+  {
+    "id": "issue-2",
+    "projectId": "proj-1",
+    "issue": "Missing test coverage on auth module",
+    "owner": "James Park",
+    "status": "Open",
+    "resolution": "",
+    "priority": "Medium"
+  },
+  {
+    "id": "issue-3",
+    "projectId": "proj-2",
+    "issue": "Legacy database connection timeout",
+    "owner": "David Okonkwo",
+    "status": "Resolved",
+    "resolution": "Increased connection pool size",
+    "priority": "High"
+  },
+  {
+    "id": "issue-4",
+    "projectId": "proj-2",
+    "issue": "IAM permissions misconfigured",
+    "owner": "David Okonkwo",
+    "status": "In Progress",
+    "resolution": "Updating IAM policies",
+    "priority": "Critical"
+  },
+  {
+    "id": "issue-5",
+    "projectId": "proj-3",
+    "issue": "UI inconsistency on iOS devices",
+    "owner": "Lisa Thompson",
+    "status": "Open",
+    "resolution": "",
+    "priority": "Medium"
+  },
+  {
+    "id": "issue-6",
+    "projectId": "proj-3",
+    "issue": "Animation performance on low-end devices",
+    "owner": "Marcus Williams",
+    "status": "In Progress",
+    "resolution": "Optimizing animation library",
+    "priority": "Low"
+  },
+  {
+    "id": "issue-7",
+    "projectId": "proj-4",
+    "issue": "Data schema mismatch",
+    "owner": "Michael Torres",
+    "status": "Open",
+    "resolution": "",
+    "priority": "High"
+  },
+  {
+    "id": "issue-8",
+    "projectId": "proj-1",
+    "issue": "Deployment pipeline failure",
+    "owner": "David Okonkwo",
+    "status": "Resolved",
+    "resolution": "Fixed Docker configuration",
+    "priority": "High"
+  },
+  {
+    "id": "issue-9",
+    "projectId": "proj-2",
+    "issue": "SSL certificate expiration",
+    "owner": "David Okonkwo",
+    "status": "Resolved",
+    "resolution": "Renewed certificates",
+    "priority": "Critical"
+  },
+  {
+    "id": "issue-10",
+    "projectId": "proj-5",
+    "issue": "Penetration test findings",
+    "owner": "James Park",
+    "status": "Resolved",
+    "resolution": "All critical findings remediated",
+    "priority": "High"
+  }
+]

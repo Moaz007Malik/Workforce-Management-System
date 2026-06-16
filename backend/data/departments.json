@@ -1,0 +1,26 @@
+[
+  {
+    "id": "dept-1",
+    "name": "Engineering",
+    "head": "Sarah Chen",
+    "employeeCount": 4
+  },
+  {
+    "id": "dept-2",
+    "name": "Design",
+    "head": "Marcus Williams",
+    "employeeCount": 2
+  },
+  {
+    "id": "dept-3",
+    "name": "Product",
+    "head": "Emily Rodriguez",
+    "employeeCount": 2
+  },
+  {
+    "id": "dept-4",
+    "name": "QA",
+    "head": "James Park",
+    "employeeCount": 2
+  }
+]

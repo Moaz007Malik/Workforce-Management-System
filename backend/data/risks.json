@@ -1,0 +1,102 @@
+[
+  {
+    "id": "risk-1",
+    "projectId": "proj-1",
+    "risk": "Key developer departure",
+    "probability": "Medium",
+    "impact": "High",
+    "mitigation": "Cross-train team members",
+    "owner": "Sarah Chen",
+    "status": "Open"
+  },
+  {
+    "id": "risk-2",
+    "projectId": "proj-1",
+    "risk": "Scope creep",
+    "probability": "High",
+    "impact": "Medium",
+    "mitigation": "Strict change control process",
+    "owner": "Emily Rodriguez",
+    "status": "Monitoring"
+  },
+  {
+    "id": "risk-3",
+    "projectId": "proj-2",
+    "risk": "AWS cost overrun",
+    "probability": "Medium",
+    "impact": "High",
+    "mitigation": "Implement cost monitoring alerts",
+    "owner": "David Okonkwo",
+    "status": "Open"
+  },
+  {
+    "id": "risk-4",
+    "projectId": "proj-2",
+    "risk": "Data migration failure",
+    "probability": "Low",
+    "impact": "Critical",
+    "mitigation": "Multiple dry-run migrations",
+    "owner": "Sarah Chen",
+    "status": "Mitigated"
+  },
+  {
+    "id": "risk-5",
+    "projectId": "proj-3",
+    "risk": "App store rejection",
+    "probability": "Low",
+    "impact": "Medium",
+    "mitigation": "Pre-submission review checklist",
+    "owner": "Marcus Williams",
+    "status": "Open"
+  },
+  {
+    "id": "risk-6",
+    "projectId": "proj-3",
+    "risk": "Design approval delays",
+    "probability": "Medium",
+    "impact": "Medium",
+    "mitigation": "Early stakeholder engagement",
+    "owner": "Marcus Williams",
+    "status": "Monitoring"
+  },
+  {
+    "id": "risk-7",
+    "projectId": "proj-4",
+    "risk": "Data quality issues",
+    "probability": "High",
+    "impact": "High",
+    "mitigation": "Data cleansing pipeline",
+    "owner": "Michael Torres",
+    "status": "Open"
+  },
+  {
+    "id": "risk-8",
+    "projectId": "proj-4",
+    "risk": "Vendor dependency",
+    "probability": "Medium",
+    "impact": "Medium",
+    "mitigation": "Evaluate alternative vendors",
+    "owner": "Emily Rodriguez",
+    "status": "Open"
+  },
+  {
+    "id": "risk-9",
+    "projectId": "proj-1",
+    "risk": "Integration complexity",
+    "probability": "High",
+    "impact": "High",
+    "mitigation": "Phased integration approach",
+    "owner": "Ahmed Khan",
+    "status": "Monitoring"
+  },
+  {
+    "id": "risk-10",
+    "projectId": "proj-2",
+    "risk": "Compliance requirements",
+    "probability": "Medium",
+    "impact": "Critical",
+    "mitigation": "Engage compliance team early",
+    "owner": "Emily Rodriguez",
+    "status": "Open"
+  }
+]

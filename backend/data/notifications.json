@@ -1,0 +1,119 @@
+[
+  {
+    "id": "notif-1",
+    "type": "task_assigned",
+    "title": "New Task Assigned",
+    "message": "You have been assigned: Build API endpoints",
+    "userId": "emp-1",
+    "read": false,
+    "createdAt": "2026-06-10T07:48:17.598Z"
+  },
+  {
+    "id": "notif-2",
+    "type": "budget",
+    "title": "Budget Warning",
+    "message": "Project Alpha is at 85% budget utilization",
+    "userId": "all",
+    "read": true,
+    "createdAt": "2026-06-10T06:48:17.598Z"
+  },
+  {
+    "id": "notif-3",
+    "type": "resource",
+    "title": "Resource Overallocation",
+    "message": "Sarah Chen is at 95% utilization",
+    "userId": "all",
+    "read": true,
+    "createdAt": "2026-06-10T05:48:17.598Z"
+  },
+  {
+    "id": "notif-4",
+    "type": "task_overdue",
+    "title": "Task Overdue",
+    "message": "Performance optimization is past due date",
+    "userId": "emp-6",
+    "read": true,
+    "createdAt": "2026-06-09T08:48:17.598Z"
+  },
+  {
+    "id": "notif-5",
+    "type": "leave",
+    "title": "Leave Approved",
+    "message": "Your sick leave request has been approved",
+    "userId": "emp-10",
+    "read": true,
+    "createdAt": "2026-06-08T08:48:17.598Z"
+  },
+  {
+    "id": "aad35207-7b77-4b4e-aacd-d89a198b63bf",
+    "type": "task_overdue",
+    "title": "Task Overdue",
+    "message": "Report generation is past its due date",
+    "userId": "emp-7",
+    "metadata": {
+      "taskId": "task-30"
+    },
+    "read": false,
+    "createdAt": "2026-06-10T08:55:47.980Z"
+  },
+  {
+    "id": "261f4a10-0246-4d54-bf1b-c5f591de44ce",
+    "type": "task_assigned",
+    "title": "New Task Assigned",
+    "message": "You have been assigned: test",
+    "userId": "emp-2",
+    "metadata": {
+      "taskId": "6a79148a-ab43-4874-8af2-689f28b78c15"
+    },
+    "read": false,
+    "createdAt": "2026-06-10T08:57:00.165Z"
+  },
+  {
+    "id": "4bcd4c24-9a4b-4182-bc3c-7706455832c0",
+    "type": "resource",
+    "title": "Resource Overallocated",
+    "message": "Sarah Chen is at 123% utilization",
+    "userId": "all",
+    "metadata": {
+      "employeeId": "emp-2"
+    },
+    "read": true,
+    "createdAt": "2026-06-10T08:57:00.249Z"
+  },
+  {
+    "id": "07b42b5f-ab08-4be6-8ac5-712d37f20261",
+    "type": "task_overdue",
+    "title": "Task Overdue",
+    "message": "Training materials is past its due date",
+    "userId": "emp-4",
+    "metadata": {
+      "taskId": "task-37"
+    },
+    "read": false,
+    "createdAt": "2026-06-10T09:01:42.278Z"
+  },
+  {
+    "id": "cfc116a8-de3d-48d8-b2ee-66390a7baf43",
+    "type": "task_overdue",
+    "title": "Task Overdue",
+    "message": "A/B testing framework is past its due date",
+    "userId": "emp-6",
+    "metadata": {
+      "taskId": "task-47"
+    },
+    "read": false,
+    "createdAt": "2026-06-10T09:01:46.127Z"
+  },
+  {
+    "id": "b02d408c-e6bb-4110-9e67-3e2ef0d5e19d",
+    "type": "task_overdue",
+    "title": "Task Overdue",
+    "message": "Disaster recovery plan is past its due date",
+    "userId": "emp-6",
+    "metadata": {
+      "taskId": "task-36"
+    },
+    "read": false,
+    "createdAt": "2026-06-10T09:11:50.618Z"
+  }
+]

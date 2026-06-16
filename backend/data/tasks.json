@@ -1,0 +1,1020 @@
+[
+  {
+    "id": "task-1",
+    "title": "Setup development environment",
+    "description": "Task description for Setup development environment",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-1",
+    "milestoneId": "ms-1-1",
+    "assigneeId": "emp-3",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 6,
+    "actualHours": 12,
+    "dueDate": "2025-05-31",
+    "requiredSkills": [
+      "Node.js"
+    ],
+    "createdAt": "2026-06-10T08:48:17.595Z",
+    "updatedAt": "2026-06-10T08:48:17.595Z"
+  },
+  {
+    "id": "task-2",
+    "title": "Design database schema",
+    "description": "Task description for Design database schema",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-2",
+    "milestoneId": "ms-2-2",
+    "assigneeId": "emp-3",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 18,
+    "actualHours": 22,
+    "dueDate": "2025-10-29",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-3",
+    "title": "Implement user authentication",
+    "description": "Task description for Implement user authentication",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-1",
+    "milestoneId": "ms-3-1",
+    "assigneeId": "emp-1",
+    "priority": "Low",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 29,
+    "actualHours": 30,
+    "dueDate": "2025-04-30",
+    "requiredSkills": [
+      "Python"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-4",
+    "title": "Build API endpoints",
+    "description": "Task description for Build API endpoints",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-9",
+    "priority": "Low",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 12,
+    "actualHours": 9,
+    "dueDate": "2025-07-06",
+    "requiredSkills": [
+      "Node.js"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-5",
+    "title": "Create dashboard UI",
+    "description": "Task description for Create dashboard UI",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-3",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 17,
+    "actualHours": 15,
+    "dueDate": "2025-08-31",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-6",
+    "title": "Write unit tests",
+    "description": "Task description for Write unit tests",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-1",
+    "milestoneId": "ms-1-1",
+    "assigneeId": "emp-6",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 24,
+    "actualHours": 30,
+    "dueDate": "2025-06-22",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-7",
+    "title": "Code review session",
+    "description": "Task description for Code review session",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-2",
+    "milestoneId": "ms-2-2",
+    "assigneeId": "emp-7",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 7,
+    "actualHours": 3,
+    "dueDate": "2026-05-12",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-8",
+    "title": "Deploy to staging",
+    "description": "Task description for Deploy to staging",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-1",
+    "milestoneId": "ms-3-1",
+    "assigneeId": "emp-6",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 24,
+    "actualHours": 22,
+    "dueDate": "2025-04-08",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-9",
+    "title": "Performance optimization",
+    "description": "Task description for Performance optimization",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-9",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 24,
+    "actualHours": 23,
+    "dueDate": "2025-08-25",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-10",
+    "title": "Bug fix sprint",
+    "description": "Task description for Bug fix sprint",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-5",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 38,
+    "actualHours": 43,
+    "dueDate": "2026-03-26",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-11",
+    "title": "Integration testing",
+    "description": "Task description for Integration testing",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-1",
+    "milestoneId": "ms-1-1",
+    "assigneeId": "emp-8",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 29,
+    "actualHours": 26,
+    "dueDate": "2026-02-03",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-12",
+    "title": "Documentation update",
+    "description": "Task description for Documentation update",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-1",
+    "milestoneId": "ms-2-1",
+    "assigneeId": "emp-7",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 31,
+    "actualHours": 27,
+    "dueDate": "2026-05-18",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-13",
+    "title": "Sprint planning",
+    "description": "Task description for Sprint planning",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-2",
+    "milestoneId": "ms-3-2",
+    "assigneeId": "emp-6",
+    "priority": "Low",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 22,
+    "actualHours": 26,
+    "dueDate": "2025-11-29",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-14",
+    "title": "Backlog grooming",
+    "description": "Task description for Backlog grooming",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-3",
+    "priority": "Critical",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 27,
+    "actualHours": 27,
+    "dueDate": "2025-10-20",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-15",
+    "title": "Security review",
+    "description": "Task description for Security review",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-4",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 27,
+    "actualHours": 27,
+    "dueDate": "2026-04-09",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-16",
+    "title": "CI/CD pipeline setup",
+    "description": "Task description for CI/CD pipeline setup",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-2",
+    "milestoneId": "ms-1-2",
+    "assigneeId": "emp-4",
+    "priority": "Critical",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 34,
+    "actualHours": 0,
+    "dueDate": "2025-09-18",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-17",
+    "title": "Load testing",
+    "description": "Task description for Load testing",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-2",
+    "milestoneId": "ms-2-2",
+    "assigneeId": "emp-9",
+    "priority": "Medium",
+    "status": "Not Started",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 5,
+    "actualHours": 0,
+    "dueDate": "2025-10-25",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-18",
+    "title": "User acceptance testing",
+    "description": "Task description for User acceptance testing",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-2",
+    "milestoneId": "ms-3-2",
+    "assigneeId": "emp-1",
+    "priority": "Critical",
+    "status": "Not Started",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 6,
+    "actualHours": 0,
+    "dueDate": "2025-06-15",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-19",
+    "title": "Feature flag implementation",
+    "description": "Task description for Feature flag implementation",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-5",
+    "priority": "Low",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 19,
+    "actualHours": 0,
+    "dueDate": "2026-01-19",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-20",
+    "title": "Accessibility audit",
+    "description": "Task description for Accessibility audit",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-2",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 11,
+    "actualHours": 12,
+    "dueDate": "2025-03-25",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-21",
+    "title": "Mobile responsive fixes",
+    "description": "Task description for Mobile responsive fixes",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-2",
+    "milestoneId": "ms-1-2",
+    "assigneeId": "emp-1",
+    "priority": "High",
+    "status": "Blocked",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 16,
+    "actualHours": 10,
+    "dueDate": "2025-01-28",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-22",
+    "title": "API documentation",
+    "description": "Task description for API documentation",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-1",
+    "milestoneId": "ms-2-1",
+    "assigneeId": "emp-8",
+    "priority": "Critical",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 23,
+    "actualHours": 0,
+    "dueDate": "2025-08-21",
+    "requiredSkills": [
+      "Node.js"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-23",
+    "title": "Monitoring setup",
+    "description": "Task description for Monitoring setup",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-1",
+    "milestoneId": "ms-3-1",
+    "assigneeId": "emp-8",
+    "priority": "High",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 9,
+    "actualHours": 0,
+    "dueDate": "2025-07-05",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-24",
+    "title": "Error handling improvements",
+    "description": "Task description for Error handling improvements",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-8",
+    "priority": "Critical",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 8,
+    "actualHours": 12,
+    "dueDate": "2025-05-18",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-25",
+    "title": "Refactoring legacy code",
+    "description": "Task description for Refactoring legacy code",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-2",
+    "priority": "Critical",
+    "status": "Blocked",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 22,
+    "actualHours": 3,
+    "dueDate": "2026-03-24",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-26",
+    "title": "Third-party integration",
+    "description": "Task description for Third-party integration",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-2",
+    "milestoneId": "ms-1-2",
+    "assigneeId": "emp-8",
+    "priority": "Medium",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 36,
+    "actualHours": 0,
+    "dueDate": "2025-10-01",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-27",
+    "title": "Data migration script",
+    "description": "Task description for Data migration script",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-2",
+    "milestoneId": "ms-2-2",
+    "assigneeId": "emp-5",
+    "priority": "Critical",
+    "status": "Blocked",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 26,
+    "actualHours": 0,
+    "dueDate": "2025-04-17",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-28",
+    "title": "Cache implementation",
+    "description": "Task description for Cache implementation",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-1",
+    "milestoneId": "ms-3-1",
+    "assigneeId": "emp-5",
+    "priority": "Critical",
+    "status": "Review",
+    "kanbanStatus": "Review",
+    "estimatedHours": 28,
+    "actualHours": 19,
+    "dueDate": "2026-05-16",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.596Z",
+    "updatedAt": "2026-06-10T08:48:17.596Z"
+  },
+  {
+    "id": "task-29",
+    "title": "Email notification system",
+    "description": "Task description for Email notification system",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-1",
+    "priority": "Critical",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 26,
+    "actualHours": 32,
+    "dueDate": "2025-11-03",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-30",
+    "title": "Report generation",
+    "description": "Task description for Report generation",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-7",
+    "priority": "Low",
+    "status": "Review",
+    "kanbanStatus": "Review",
+    "estimatedHours": 26,
+    "actualHours": 20,
+    "dueDate": "2026-05-06",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:55:47.929Z"
+  },
+  {
+    "id": "task-31",
+    "title": "Search functionality",
+    "description": "Task description for Search functionality",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-3",
+    "milestoneId": "ms-1-4",
+    "assigneeId": "emp-5",
+    "priority": "Critical",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 22,
+    "actualHours": 21,
+    "dueDate": "2026-03-03",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-32",
+    "title": "Export to PDF feature",
+    "description": "Task description for Export to PDF feature",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-1",
+    "milestoneId": "ms-2-1",
+    "assigneeId": "emp-5",
+    "priority": "Low",
+    "status": "In Progress",
+    "kanbanStatus": "In Progress",
+    "estimatedHours": 8,
+    "actualHours": 5,
+    "dueDate": "2026-02-27",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-33",
+    "title": "Role-based access control",
+    "description": "Task description for Role-based access control",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-2",
+    "milestoneId": "ms-3-2",
+    "assigneeId": "emp-6",
+    "priority": "Low",
+    "status": "Not Started",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 8,
+    "actualHours": 0,
+    "dueDate": "2025-07-26",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-34",
+    "title": "Audit log implementation",
+    "description": "Task description for Audit log implementation",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-9",
+    "priority": "Low",
+    "status": "Not Started",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 13,
+    "actualHours": 0,
+    "dueDate": "2025-12-19",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-35",
+    "title": "Backup strategy",
+    "description": "Task description for Backup strategy",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-2",
+    "priority": "Critical",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 37,
+    "actualHours": 35,
+    "dueDate": "2026-03-03",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-36",
+    "title": "Disaster recovery plan",
+    "description": "Task description for Disaster recovery plan",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-1",
+    "milestoneId": "ms-1-1",
+    "assigneeId": "emp-6",
+    "priority": "Low",
+    "status": "Review",
+    "kanbanStatus": "Review",
+    "estimatedHours": 34,
+    "actualHours": 8,
+    "dueDate": "2025-11-27",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T09:11:50.585Z"
+  },
+  {
+    "id": "task-37",
+    "title": "Training materials",
+    "description": "Task description for Training materials",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-1",
+    "milestoneId": "ms-2-1",
+    "assigneeId": "emp-4",
+    "priority": "Low",
+    "status": "In Progress",
+    "kanbanStatus": "In Progress",
+    "estimatedHours": 27,
+    "actualHours": 21,
+    "dueDate": "2026-01-11",
+    "requiredSkills": [
+      "Python"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T09:01:42.239Z"
+  },
+  {
+    "id": "task-38",
+    "title": "Stakeholder presentation",
+    "description": "Task description for Stakeholder presentation",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-1",
+    "milestoneId": "ms-3-1",
+    "assigneeId": "emp-2",
+    "priority": "Medium",
+    "status": "In Progress",
+    "kanbanStatus": "In Progress",
+    "estimatedHours": 22,
+    "actualHours": 14,
+    "dueDate": "2025-12-07",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-39",
+    "title": "Risk assessment update",
+    "description": "Task description for Risk assessment update",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-9",
+    "priority": "High",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 32,
+    "actualHours": 37,
+    "dueDate": "2025-04-13",
+    "requiredSkills": [
+      "UI/UX Design"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-40",
+    "title": "Sprint retrospective",
+    "description": "Task description for Sprint retrospective",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-1",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 8,
+    "actualHours": 12,
+    "dueDate": "2025-06-20",
+    "requiredSkills": [
+      "Python"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-41",
+    "title": "Technical debt reduction",
+    "description": "Task description for Technical debt reduction",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-3",
+    "milestoneId": "ms-1-4",
+    "assigneeId": "emp-5",
+    "priority": "Critical",
+    "status": "In Progress",
+    "kanbanStatus": "In Progress",
+    "estimatedHours": 23,
+    "actualHours": 21,
+    "dueDate": "2025-12-22",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-42",
+    "title": "Cloud cost optimization",
+    "description": "Task description for Cloud cost optimization",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-1",
+    "milestoneId": "ms-2-1",
+    "assigneeId": "emp-4",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 10,
+    "actualHours": 11,
+    "dueDate": "2026-02-02",
+    "requiredSkills": [
+      "Python"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-43",
+    "title": "Microservices decomposition",
+    "description": "Task description for Microservices decomposition",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-2",
+    "milestoneId": "ms-3-2",
+    "assigneeId": "emp-6",
+    "priority": "Low",
+    "status": "Review",
+    "kanbanStatus": "Review",
+    "estimatedHours": 7,
+    "actualHours": 5,
+    "dueDate": "2026-03-17",
+    "requiredSkills": [
+      "DevOps"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-44",
+    "title": "GraphQL API layer",
+    "description": "Task description for GraphQL API layer",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-6",
+    "priority": "Low",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 11,
+    "actualHours": 18,
+    "dueDate": "2025-02-16",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-45",
+    "title": "Real-time notifications",
+    "description": "Task description for Real-time notifications",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-5",
+    "priority": "Medium",
+    "status": "Completed",
+    "kanbanStatus": "Completed",
+    "estimatedHours": 22,
+    "actualHours": 28,
+    "dueDate": "2025-10-28",
+    "requiredSkills": [
+      "Node.js"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-46",
+    "title": "Analytics tracking",
+    "description": "Task description for Analytics tracking",
+    "projectId": "proj-1",
+    "phaseId": "phase-1-2",
+    "milestoneId": "ms-1-2",
+    "assigneeId": "emp-8",
+    "priority": "Critical",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 26,
+    "actualHours": 0,
+    "dueDate": "2025-06-13",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-47",
+    "title": "A/B testing framework",
+    "description": "Task description for A/B testing framework",
+    "projectId": "proj-2",
+    "phaseId": "phase-2-1",
+    "milestoneId": "ms-2-1",
+    "assigneeId": "emp-6",
+    "priority": "Low",
+    "status": "In Progress",
+    "kanbanStatus": "In Progress",
+    "estimatedHours": 32,
+    "actualHours": 10,
+    "dueDate": "2025-07-04",
+    "requiredSkills": [
+      "SQL"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T09:01:46.076Z"
+  },
+  {
+    "id": "task-48",
+    "title": "Localization support",
+    "description": "Task description for Localization support",
+    "projectId": "proj-3",
+    "phaseId": "phase-3-1",
+    "milestoneId": "ms-3-1",
+    "assigneeId": "emp-7",
+    "priority": "Critical",
+    "status": "In Progress",
+    "kanbanStatus": "In Progress",
+    "estimatedHours": 5,
+    "actualHours": 1,
+    "dueDate": "2025-12-01",
+    "requiredSkills": [
+      "Node.js"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-49",
+    "title": "Payment gateway integration",
+    "description": "Task description for Payment gateway integration",
+    "projectId": "proj-4",
+    "phaseId": "phase-4-1",
+    "milestoneId": "ms-4-1",
+    "assigneeId": "emp-2",
+    "priority": "Critical",
+    "status": "Review",
+    "kanbanStatus": "Review",
+    "estimatedHours": 29,
+    "actualHours": 15,
+    "dueDate": "2025-10-25",
+    "requiredSkills": [
+      "React"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "task-50",
+    "title": "Customer feedback module",
+    "description": "Task description for Customer feedback module",
+    "projectId": "proj-5",
+    "phaseId": "phase-5-1",
+    "milestoneId": "ms-5-1",
+    "assigneeId": "emp-8",
+    "priority": "Critical",
+    "status": "Not Started",
+    "kanbanStatus": "To Do",
+    "estimatedHours": 38,
+    "actualHours": 0,
+    "dueDate": "2026-05-05",
+    "requiredSkills": [
+      "Node.js"
+    ],
+    "createdAt": "2026-06-10T08:48:17.597Z",
+    "updatedAt": "2026-06-10T08:48:17.597Z"
+  },
+  {
+    "id": "6a79148a-ab43-4874-8af2-689f28b78c15",
+    "title": "test",
+    "description": "test",
+    "projectId": "proj-1",
+    "assigneeId": "emp-2",
+    "priority": "Medium",
+    "status": "Not Started",
+    "kanbanStatus": "Backlog",
+    "estimatedHours": 8,
+    "dueDate": "2026-06-11",
+    "requiredSkills": [
+      "test"
+    ],
+    "actualHours": 0,
+    "createdAt": "2026-06-10T08:57:00.101Z",
+    "updatedAt": "2026-06-10T08:57:00.101Z"
+  }
+]

@@ -1,0 +1,208 @@
+[
+  {
+    "id": "emp-1",
+    "employeeId": "EMP001",
+    "fullName": "Ahmed Khan",
+    "email": "ahmed.khan@company.com",
+    "department": "Engineering",
+    "designation": "Senior Developer",
+    "skills": [
+      "React",
+      "Node.js",
+      "TypeScript"
+    ],
+    "hourlyRate": 85,
+    "monthlySalary": 13600,
+    "capacityHours": 40,
+    "availability": 28,
+    "status": "Allocated",
+    "utilization": 30,
+    "allocatedHours": 12,
+    "updatedAt": "2026-06-10T10:09:26.801Z"
+  },
+  {
+    "id": "emp-2",
+    "employeeId": "EMP002",
+    "fullName": "Sarah Chen",
+    "email": "sarah.chen@company.com",
+    "department": "Engineering",
+    "designation": "Tech Lead",
+    "skills": [
+      "React",
+      "Node.js",
+      "AWS",
+      "DevOps"
+    ],
+    "hourlyRate": 110,
+    "monthlySalary": 17600,
+    "capacityHours": 40,
+    "availability": 0,
+    "status": "Fully Allocated",
+    "utilization": 123,
+    "allocatedHours": 49,
+    "updatedAt": "2026-06-10T10:09:26.807Z"
+  },
+  {
+    "id": "emp-3",
+    "employeeId": "EMP003",
+    "fullName": "Marcus Williams",
+    "email": "marcus.w@company.com",
+    "department": "Design",
+    "designation": "UI/UX Lead",
+    "skills": [
+      "UI/UX Design",
+      "React"
+    ],
+    "hourlyRate": 75,
+    "monthlySalary": 12000,
+    "capacityHours": 40,
+    "availability": 40,
+    "status": "Available",
+    "utilization": 0,
+    "allocatedHours": 0,
+    "updatedAt": "2026-06-10T10:09:26.811Z"
+  },
+  {
+    "id": "emp-4",
+    "employeeId": "EMP004",
+    "fullName": "Emily Rodriguez",
+    "email": "emily.r@company.com",
+    "department": "Product",
+    "designation": "Product Manager",
+    "skills": [
+      "Project Management",
+      "Agile/Scrum"
+    ],
+    "hourlyRate": 95,
+    "monthlySalary": 15200,
+    "capacityHours": 40,
+    "availability": 0,
+    "status": "Fully Allocated",
+    "utilization": 100,
+    "allocatedHours": 40,
+    "updatedAt": "2026-06-10T10:09:26.814Z"
+  },
+  {
+    "id": "emp-5",
+    "employeeId": "EMP005",
+    "fullName": "James Park",
+    "email": "james.park@company.com",
+    "department": "QA",
+    "designation": "QA Engineer",
+    "skills": [
+      "SQL",
+      "Python",
+      "Agile/Scrum"
+    ],
+    "hourlyRate": 65,
+    "monthlySalary": 10400,
+    "capacityHours": 40,
+    "availability": 0,
+    "status": "Fully Allocated",
+    "utilization": 148,
+    "allocatedHours": 59,
+    "updatedAt": "2026-06-10T10:09:26.818Z"
+  },
+  {
+    "id": "emp-6",
+    "employeeId": "EMP006",
+    "fullName": "Priya Sharma",
+    "email": "priya.s@company.com",
+    "department": "Engineering",
+    "designation": "Full Stack Developer",
+    "skills": [
+      "React",
+      "Python",
+      "AWS"
+    ],
+    "hourlyRate": 80,
+    "monthlySalary": 12800,
+    "capacityHours": 40,
+    "availability": 0,
+    "status": "Fully Allocated",
+    "utilization": 145,
+    "allocatedHours": 58,
+    "updatedAt": "2026-06-10T10:09:26.821Z"
+  },
+  {
+    "id": "emp-7",
+    "employeeId": "EMP007",
+    "fullName": "David Okonkwo",
+    "email": "david.o@company.com",
+    "department": "Engineering",
+    "designation": "DevOps Engineer",
+    "skills": [
+      "DevOps",
+      "AWS",
+      "Node.js"
+    ],
+    "hourlyRate": 90,
+    "monthlySalary": 14400,
+    "capacityHours": 40,
+    "availability": 30,
+    "status": "Allocated",
+    "utilization": 25,
+    "allocatedHours": 10,
+    "updatedAt": "2026-06-10T10:09:26.825Z"
+  },
+  {
+    "id": "emp-8",
+    "employeeId": "EMP008",
+    "fullName": "Lisa Thompson",
+    "email": "lisa.t@company.com",
+    "department": "Design",
+    "designation": "Product Designer",
+    "skills": [
+      "UI/UX Design"
+    ],
+    "hourlyRate": 70,
+    "monthlySalary": 11200,
+    "capacityHours": 40,
+    "availability": 0,
+    "status": "Fully Allocated",
+    "utilization": 330,
+    "allocatedHours": 132,
+    "updatedAt": "2026-06-10T10:09:26.827Z"
+  },
+  {
+    "id": "emp-9",
+    "employeeId": "EMP009",
+    "fullName": "Michael Torres",
+    "email": "michael.t@company.com",
+    "department": "Product",
+    "designation": "Business Analyst",
+    "skills": [
+      "Project Management",
+      "SQL"
+    ],
+    "hourlyRate": 72,
+    "monthlySalary": 11520,
+    "capacityHours": 40,
+    "availability": 22,
+    "status": "Allocated",
+    "utilization": 45,
+    "allocatedHours": 18,
+    "updatedAt": "2026-06-10T10:09:26.829Z"
+  },
+  {
+    "id": "emp-10",
+    "employeeId": "EMP010",
+    "fullName": "Anna Kowalski",
+    "email": "anna.k@company.com",
+    "department": "QA",
+    "designation": "Senior QA",
+    "skills": [
+      "Python",
+      "SQL",
+      "Agile/Scrum"
+    ],
+    "hourlyRate": 68,
+    "monthlySalary": 10880,
+    "capacityHours": 40,
+    "availability": 40,
+    "status": "Available",
+    "utilization": 0,
+    "allocatedHours": 0,
+    "updatedAt": "2026-06-10T10:09:26.833Z"
+  }
+]

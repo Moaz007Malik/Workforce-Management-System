@@ -1,0 +1,128 @@
+[
+  {
+    "id": "audit-1",
+    "action": "BUDGET_CHANGE",
+    "entity": "Project",
+    "entityId": "proj-1",
+    "details": "Project Alpha budget changed from $50,000 to $60,000",
+    "userId": "emp-4",
+    "timestamp": "2026-06-09T08:48:17.598Z"
+  },
+  {
+    "id": "audit-2",
+    "action": "CREATE",
+    "entity": "Task",
+    "entityId": "task-1",
+    "details": "Task created: Setup development environment",
+    "userId": "emp-4",
+    "timestamp": "2026-06-08T08:48:17.599Z"
+  },
+  {
+    "id": "audit-3",
+    "action": "UPDATE",
+    "entity": "Project",
+    "entityId": "proj-2",
+    "details": "Project status changed to Active",
+    "userId": "emp-2",
+    "timestamp": "2026-06-07T08:48:17.599Z"
+  },
+  {
+    "id": "audit-4",
+    "action": "KANBAN_MOVE",
+    "entity": "Task",
+    "entityId": "task-5",
+    "details": "Task moved from To Do to In Progress",
+    "userId": "emp-1",
+    "timestamp": "2026-06-09T20:48:17.599Z"
+  },
+  {
+    "id": "audit-5",
+    "action": "CREATE",
+    "entity": "Employee",
+    "entityId": "emp-6",
+    "details": "Employee Priya Sharma added to system",
+    "userId": "system",
+    "timestamp": "2026-06-03T08:48:17.599Z"
+  },
+  {
+    "id": "bd0145c7-92eb-4ab2-8c46-624f278a7211",
+    "action": "UPDATE",
+    "entity": "Task",
+    "entityId": "task-30",
+    "details": "Task updated (kanbanStatus, status)",
+    "userId": "system",
+    "timestamp": "2026-06-10T08:55:47.947Z"
+  },
+  {
+    "id": "80b374fa-01ba-4b6a-accd-e0982673918b",
+    "action": "KANBAN_MOVE",
+    "entity": "Task",
+    "entityId": "task-30",
+    "details": "Task \"Report generation\" moved from In Progress to Review",
+    "userId": "system",
+    "timestamp": "2026-06-10T08:55:47.963Z"
+  },
+  {
+    "id": "f112fdf6-38cc-48f8-b5a2-f16381077bc4",
+    "action": "CREATE",
+    "entity": "Task",
+    "entityId": "6a79148a-ab43-4874-8af2-689f28b78c15",
+    "details": "Task created: test",
+    "userId": "system",
+    "timestamp": "2026-06-10T08:57:00.132Z"
+  },
+  {
+    "id": "b5980f44-13c2-4770-83c7-04dc7a7d2327",
+    "action": "UPDATE",
+    "entity": "Task",
+    "entityId": "task-37",
+    "details": "Task updated (kanbanStatus, status)",
+    "userId": "system",
+    "timestamp": "2026-06-10T09:01:42.251Z"
+  },
+  {
+    "id": "8657318b-fe9c-4db0-8019-a49105f30cd8",
+    "action": "KANBAN_MOVE",
+    "entity": "Task",
+    "entityId": "task-37",
+    "details": "Task \"Training materials\" moved from To Do to In Progress",
+    "userId": "system",
+    "timestamp": "2026-06-10T09:01:42.264Z"
+  },
+  {
+    "id": "d07df1b5-9469-4b29-babc-ef296667b607",
+    "action": "UPDATE",
+    "entity": "Task",
+    "entityId": "task-47",
+    "details": "Task updated (kanbanStatus, status)",
+    "userId": "system",
+    "timestamp": "2026-06-10T09:01:46.091Z"
+  },
+  {
+    "id": "98fc6306-222d-4738-a72a-c83cbf8e504d",
+    "action": "KANBAN_MOVE",
+    "entity": "Task",
+    "entityId": "task-47",
+    "details": "Task \"A/B testing framework\" moved from To Do to In Progress",
+    "userId": "system",
+    "timestamp": "2026-06-10T09:01:46.105Z"
+  },
+  {
+    "id": "77133f18-3d5b-44dc-a8b4-73acbe280c58",
+    "action": "UPDATE",
+    "entity": "Task",
+    "entityId": "task-36",
+    "details": "Task updated (kanbanStatus, status)",
+    "userId": "system",
+    "timestamp": "2026-06-10T09:11:50.596Z"
+  },
+  {
+    "id": "80ab8205-7457-440e-bdb8-fd6dda9e5a16",
+    "action": "KANBAN_MOVE",
+    "entity": "Task",
+    "entityId": "task-36",
+    "details": "Task \"Disaster recovery plan\" moved from In Progress to Review",
+    "userId": "system",
+    "timestamp": "2026-06-10T09:11:50.607Z"
+  }
+]

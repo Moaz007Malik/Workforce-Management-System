@@ -1,0 +1,32 @@
+[
+  {
+    "id": "leave-1",
+    "employeeId": "emp-10",
+    "type": "Sick Leave",
+    "startDate": "2025-05-20",
+    "endDate": "2025-06-05",
+    "days": 12,
+    "status": "Approved",
+    "reason": "Medical recovery"
+  },
+  {
+    "id": "leave-2",
+    "employeeId": "emp-5",
+    "type": "Annual Leave",
+    "startDate": "2025-07-01",
+    "endDate": "2025-07-14",
+    "days": 10,
+    "status": "Pending",
+    "reason": "Summer vacation"
+  },
+  {
+    "id": "leave-3",
+    "employeeId": "emp-8",
+    "type": "Annual Leave",
+    "startDate": "2025-08-01",
+    "endDate": "2025-08-07",
+    "days": 5,
+    "status": "Pending",
+    "reason": "Family trip"
+  }
+]

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "budget-proj-1",
+    "projectId": "proj-1",
+    "amount": 500000,
+    "plannedCost": 19855,
+    "actualCost": 12320,
+    "currency": "USD",
+    "fiscalYear": 2025,
+    "createdAt": "2026-06-10T08:48:17.598Z",
+    "updatedAt": "2026-06-10T09:11:50.635Z"
+  },
+  {
+    "id": "budget-proj-2",
+    "projectId": "proj-2",
+    "amount": 320000,
+    "plannedCost": 15025,
+    "actualCost": 9889,
+    "currency": "USD",
+    "fiscalYear": 2025,
+    "createdAt": "2026-06-10T08:48:17.598Z",
+    "updatedAt": "2026-06-10T09:01:46.146Z"
+  },
+  {
+    "id": "budget-proj-3",
+    "projectId": "proj-3",
+    "amount": 180000,
+    "plannedCost": 153000,
+    "actualCost": 120600,
+    "currency": "USD",
+    "fiscalYear": 2025,
+    "createdAt": "2026-06-10T08:48:17.598Z"
+  },
+  {
+    "id": "budget-proj-4",
+    "projectId": "proj-4",
+    "amount": 420000,
+    "plannedCost": 357000,
+    "actualCost": 172200,
+    "currency": "USD",
+    "fiscalYear": 2025,
+    "createdAt": "2026-06-10T08:48:17.598Z"
+  },
+  {
+    "id": "budget-proj-5",
+    "projectId": "proj-5",
+    "amount": 95000,
+    "plannedCost": 21120,
+    "actualCost": 18240,
+    "currency": "USD",
+    "fiscalYear": 2025,
+    "createdAt": "2026-06-10T08:48:17.598Z",
+    "updatedAt": "2026-06-10T08:55:48.016Z"
+  }
+]
