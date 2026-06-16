@@ -1,4 +1,4 @@
-export type SystemRole = 'Admin' | 'HR' | 'Manager'
+export type SystemRole = 'Admin' | 'HR' | 'Department Manager' | 'Employee'
 
 export type PcpRole = 'Requester' | 'Approver' | 'Admin' | 'Executive'
 
@@ -28,12 +28,42 @@ export interface Employee {
   status: 'Available' | 'Allocated' | 'Fully Allocated' | 'On Leave'
   utilization?: number
   allocatedHours?: number
-  /** App access: Admin · HR · Manager */
+  /** App access role */
   systemRole?: SystemRole
-  /** PCP workflow role (Manager / Admin with PCP duties) */
+  /** PCP workflow role (optional) */
   pcpRole?: PcpRole | null
   businessUnit?: string
+  managerId?: string | null
   active?: boolean
+  onLeave?: boolean
+  approvalDelegateId?: string | null
+}
+
+export interface PerformanceReview {
+  id: string
+  employeeId: string
+  period: string
+  rating: number
+  goals: string
+  notes: string
+  reviewDate: string
+  reviewerId: string
+  reviewerName: string
+  createdAt: string
+}
+
+export interface WorkAssignment {
+  id: string
+  employeeId: string
+  title: string
+  description: string
+  projectId?: string | null
+  startDate: string
+  endDate?: string | null
+  status: 'Active' | 'Completed' | 'Cancelled'
+  assignedBy: string
+  assignedByName: string
+  createdAt: string
 }
 
 export interface Project {

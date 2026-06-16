@@ -46,7 +46,7 @@ export const useAppStore = create<AppState>()(
       colorTheme: DEFAULT_COLOR_THEME,
       sidebarOpen: true,
       currentUserId: 'emp-1',
-      systemRole: 'Manager',
+      systemRole: 'Department Manager',
       pcpRole: 'Requester',
       businessUnit: 'Construction – North',
       notificationPrefs: defaultPrefs,
@@ -73,7 +73,7 @@ export const useAppStore = create<AppState>()(
       notificationPrefs: s.notificationPrefs,
     }), migrate: (persisted) => {
       const state = persisted as { colorTheme?: string }
-      if (state.colorTheme === 'descon') {
+      if (state.colorTheme === 'descon' || state.colorTheme === 'airia') {
         state.colorTheme = 'wms'
       }
       return state as typeof persisted

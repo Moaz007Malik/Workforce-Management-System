@@ -156,7 +156,7 @@ export async function buildChatContext({ pcpRole, businessUnit, userId, systemRo
 }
 
 export function buildSystemPrompt(context) {
-  return `You are the WMS Assistant, the AI assistant for the Workforce Management System.
+  return `You are the workforce management assistant for this application.
 
 RULES:
 1. Answer using the DATABASE CONTEXT JSON below for projects, employees, PCPs, tasks, risks, issues, and KPIs.

@@ -118,7 +118,7 @@ export function DashboardExportDialog({ open, onClose, metrics, pdfOptions }: Da
           <Input
             id="dashboard-export-email"
             type="email"
-            placeholder="name@company.com"
+            placeholder="name@wms.com"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setError(null); setSentMessage(null) }}
             onKeyDown={(e) => e.key === 'Enter' && handleSendEmail()}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, Search, Pencil, Trash2, Building2, DollarSign, Target, ListTodo } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -12,6 +12,8 @@ import { useProjectStore } from '@/stores/useProjectStore'
 import { useTaskStore } from '@/stores/useTaskStore'
 import { useEmployeeStore } from '@/stores/useEmployeeStore'
 import { useDashboardStore } from '@/stores/useDashboardStore'
+import { useEffectiveRoles } from '@/lib/useEffectiveRoles'
+import { isEmployeeRole } from '@/lib/roles'
 import { cn, formatCurrency, getStatusColor, getPriorityColor } from '@/lib/utils'
 import type { Project } from '@/types'
 
@@ -30,6 +32,8 @@ export function Projects() {
   const { tasks, fetchTasks } = useTaskStore()
   const { employees, fetchEmployees } = useEmployeeStore()
   const { metrics, fetchMetrics } = useDashboardStore()
+  const { systemRole, currentUserId } = useEffectiveRoles()
+  const isEmployee = isEmployeeRole(systemRole)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [formOpen, setFormOpen] = useState(false)
@@ -38,11 +42,23 @@ export function Projects() {
   useEffect(() => {
     fetchProjects()
     fetchTasks()
-    fetchEmployees()
-    fetchMetrics()
-  }, [fetchProjects, fetchTasks, fetchEmployees, fetchMetrics])
+    if (!isEmployee) {
+      fetchEmployees()
+      fetchMetrics()
+    }
+  }, [fetchProjects, fetchTasks, fetchEmployees, fetchMetrics, isEmployee])
 
-  const filtered = projects.filter((p) => {
+  const myProjectIds = useMemo(() => {
+    if (!isEmployee || !currentUserId) return null
+    return new Set(tasks.filter((t) => t.assigneeId === currentUserId).map((t) => t.projectId))
+  }, [tasks, isEmployee, currentUserId])
+
+  const scopedProjects = useMemo(() => {
+    if (!myProjectIds) return projects
+    return projects.filter((p) => myProjectIds.has(p.id))
+  }, [projects, myProjectIds])
+
+  const filtered = scopedProjects.filter((p) => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) || p.client.toLowerCase().includes(search.toLowerCase())
     const matchStatus = statusFilter === 'all' || p.status === statusFilter
     return matchSearch && matchStatus
@@ -69,12 +85,16 @@ export function Projects() {
     <div className="space-y-4 animate-fade-in min-w-0 sm:space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-bold sm:text-2xl">Projects</h1>
-          <p className="text-muted-foreground">Manage and track all project portfolios</p>
+          <h1 className="text-xl font-bold sm:text-2xl">{isEmployee ? 'My Projects' : 'Projects'}</h1>
+          <p className="text-muted-foreground">
+            {isEmployee ? 'Projects you are assigned to via tasks' : 'Manage and track all project portfolios'}
+          </p>
         </div>
-        <Button onClick={() => { setEditProject(null); setFormOpen(true) }}>
-          <Plus className="h-4 w-4" /> New Project
-        </Button>
+        {!isEmployee && (
+          <Button onClick={() => { setEditProject(null); setFormOpen(true) }}>
+            <Plus className="h-4 w-4" /> New Project
+          </Button>
+        )}
       </div>
 
       <div className="flex gap-3">
@@ -92,10 +112,18 @@ export function Projects() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {filtered.length === 0 && (
+          <p className="col-span-full rounded-lg border border-dashed border-border py-12 text-center text-sm text-muted-foreground">
+            {isEmployee ? 'You are not assigned to any projects yet.' : 'No projects match your filters.'}
+          </p>
+        )}
         {filtered.map((project) => {
           const projectTasks = tasks.filter((t) => t.projectId === project.id)
-          const completed = projectTasks.filter((t) => t.status === 'Completed').length
-          const taskProgress = projectTasks.length ? Math.round((completed / projectTasks.length) * 100) : 0
+          const myTasks = isEmployee && currentUserId
+            ? projectTasks.filter((t) => t.assigneeId === currentUserId)
+            : projectTasks
+          const completed = myTasks.filter((t) => t.status === 'Completed').length
+          const taskProgress = myTasks.length ? Math.round((completed / myTasks.length) * 100) : 0
           const financials = metrics?.projectProfitability.find((p) => p.projectId === project.id)
           const actualCost = financials?.actualCost ?? 0
           const barColor = financials?.health === 'red' ? 'danger' : financials?.health === 'yellow' ? 'warning' : 'success'
@@ -121,6 +149,7 @@ export function Projects() {
                       <span className="truncate">{project.client}</span>
                     </p>
                   </div>
+                  {!isEmployee && (
                   <div
                     className="flex shrink-0 gap-0.5 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100"
                     onClick={(e) => e.stopPropagation()}
@@ -132,6 +161,7 @@ export function Projects() {
                       <Trash2 />
                     </Button>
                   </div>
+                  )}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
@@ -143,11 +173,12 @@ export function Projects() {
                   </span>
                   <Badge variant="secondary" className="gap-1 text-[11px] font-normal">
                     <ListTodo className="h-3 w-3" />
-                    {projectTasks.length} tasks
+                    {isEmployee ? `${myTasks.length} my tasks` : `${projectTasks.length} tasks`}
                   </Badge>
                 </div>
 
                 <div className="space-y-3 rounded-xl border border-border/60 bg-muted/30 p-3.5">
+                  {!isEmployee && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2 text-sm font-medium">
@@ -163,8 +194,9 @@ export function Projects() {
                       <span className="font-medium text-foreground">{formatCurrency(actualCost)}</span> spent · {financials?.consumption ?? 0}% of budget
                     </p>
                   </div>
+                  )}
 
-                  <div className="h-px bg-border/60" />
+                  {!isEmployee && <div className="h-px bg-border/60" />}
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
@@ -172,13 +204,13 @@ export function Projects() {
                         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-primary">
                           <Target className="h-3.5 w-3.5" />
                         </span>
-                        Project Completion
+                        {isEmployee ? 'My Task Progress' : 'Project Completion'}
                       </div>
                       <span className="text-sm font-semibold tabular-nums text-primary">{taskProgress}%</span>
                     </div>
                     <Progress value={taskProgress} max={100} color={taskProgress === 100 ? 'success' : 'default'} className="flex-1" />
                     <p className="text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">{completed}</span> of {projectTasks.length} tasks completed
+                      <span className="font-medium text-foreground">{completed}</span> of {myTasks.length} tasks completed
                     </p>
                   </div>
                 </div>
@@ -188,6 +220,7 @@ export function Projects() {
         })}
       </div>
 
+      {!isEmployee && (
       <ProjectFormDialog
         open={formOpen}
         onClose={() => setFormOpen(false)}
@@ -195,6 +228,7 @@ export function Projects() {
         project={editProject}
         employees={employees}
       />
+      )}
     </div>
   )
 }

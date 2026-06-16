@@ -8,13 +8,11 @@ import { Select } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { api } from '@/lib/api'
 import { usePcpStore } from '@/stores/usePcpStore'
-import { useAuthStore } from '@/stores/useAuthStore'
-import { useAppStore } from '@/stores/useAppStore'
 import { canAccessAdmin } from '@/lib/roles'
 import { useEffectiveRoles } from '@/lib/useEffectiveRoles'
-import type { PcpMasters, PcpRole, PcpUser } from '@/types'
+import type { PcpMasters } from '@/types'
 
-type Tab = 'chains' | 'masters' | 'users'
+type Tab = 'chains' | 'masters'
 type MasterCategory = 'clients' | 'costCenters' | 'grades' | 'jobFamilies' | 'locations' | 'benefits'
 
 interface ApprovalChain {
@@ -26,11 +24,6 @@ interface ApprovalChain {
   steps: string[]
 }
 
-interface ExtendedPcpUser extends PcpUser {
-  onLeave?: boolean
-  approvalDelegateId?: string | null
-}
-
 const MASTER_TABS: { key: MasterCategory; label: string }[] = [
   { key: 'clients', label: 'Clients' },
   { key: 'costCenters', label: 'Cost Centers' },
@@ -39,8 +32,6 @@ const MASTER_TABS: { key: MasterCategory; label: string }[] = [
   { key: 'locations', label: 'Locations' },
   { key: 'benefits', label: 'Benefits' },
 ]
-
-const PCP_ROLES: PcpRole[] = ['Requester', 'Approver', 'Admin', 'Executive']
 
 function FlashBanner({ message, type }: { message: string; type: 'success' | 'error' }) {
   return (
@@ -58,9 +49,10 @@ function FlashBanner({ message, type }: { message: string; type: 'success' | 'er
 
 export function PcpAdmin() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const tab = (searchParams.get('tab') as Tab) || 'chains'
+  const rawTab = searchParams.get('tab')
+  const tab: Tab = rawTab === 'masters' ? 'masters' : 'chains'
   const { systemRole, pcpRole } = useEffectiveRoles()
-  const { masters, fetchMasters, fetchUsers, setMasters, users } = usePcpStore()
+  const { masters, fetchMasters, setMasters } = usePcpStore()
   const [chains, setChains] = useState<ApprovalChain[]>([])
   const [masterCategory, setMasterCategory] = useState<MasterCategory>('clients')
   const [chainForm, setChainForm] = useState<Partial<ApprovalChain>>({ steps: ['BU Head', 'Finance Manager'] })
@@ -72,15 +64,6 @@ export function PcpAdmin() {
   const [editValue, setEditValue] = useState('')
   const [saving, setSaving] = useState(false)
   const [flash, setFlash] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
-  const [showAddUser, setShowAddUser] = useState(false)
-  const [newUser, setNewUser] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    role: 'Requester' as PcpRole,
-    businessUnit: '',
-    designation: '',
-  })
 
   const notify = useCallback((type: 'success' | 'error', text: string) => {
     setFlash({ type, text })
@@ -94,16 +77,8 @@ export function PcpAdmin() {
 
   useEffect(() => {
     void fetchMasters()
-    void fetchUsers()
     void loadChains().catch((err) => notify('error', err instanceof Error ? err.message : 'Failed to load chains'))
-  }, [fetchMasters, fetchUsers, loadChains, notify])
-
-  useEffect(() => {
-    const bus = masters?.businessUnits ?? []
-    if (bus.length && !newUser.businessUnit) {
-      setNewUser((u) => ({ ...u, businessUnit: bus[0] }))
-    }
-  }, [masters?.businessUnits, newUser.businessUnit])
+  }, [fetchMasters, loadChains, notify])
 
   if (!canAccessAdmin(systemRole, pcpRole)) {
     return <Navigate to="/" replace />
@@ -152,73 +127,6 @@ export function PcpAdmin() {
       notify('success', 'Approval chain deleted')
     } catch (err) {
       notify('error', err instanceof Error ? err.message : 'Failed to delete chain')
-    }
-  }
-
-  const updateUser = async (user: ExtendedPcpUser, password?: string) => {
-    try {
-      const payload: Record<string, unknown> = {
-        role: user.role,
-        businessUnit: user.businessUnit,
-        active: user.active,
-        onLeave: Boolean(user.onLeave),
-        approvalDelegateId: user.approvalDelegateId || null,
-      }
-      if (password?.trim()) payload.password = password.trim()
-      const updated = await api.put<ExtendedPcpUser>(`/pcp/users/${user.id}`, payload)
-      await fetchUsers()
-
-      const authUser = useAuthStore.getState().user
-      if (authUser?.id === user.id) {
-        const merged = { ...authUser, ...updated, pcpRole: updated.role, fullName: authUser.fullName }
-        useAuthStore.setState({ user: merged })
-        useAppStore.getState().setCurrentUser(merged)
-      }
-      notify('success', `${user.name} updated`)
-    } catch (err) {
-      notify('error', err instanceof Error ? err.message : 'Failed to update user')
-    }
-  }
-
-  const createUser = async () => {
-    if (!newUser.fullName.trim() || !newUser.email.trim() || !newUser.password.trim()) {
-      notify('error', 'Name, email, and password are required')
-      return
-    }
-    if (newUser.password.length < 6) {
-      notify('error', 'Password must be at least 6 characters')
-      return
-    }
-    if (!newUser.businessUnit) {
-      notify('error', 'Select a business unit')
-      return
-    }
-    setSaving(true)
-    const createdEmail = newUser.email.trim()
-    try {
-      await api.post('/pcp/users', {
-        fullName: newUser.fullName.trim(),
-        email: createdEmail,
-        password: newUser.password,
-        role: newUser.role,
-        businessUnit: newUser.businessUnit,
-        designation: newUser.designation.trim() || undefined,
-      })
-      await fetchUsers()
-      setNewUser({
-        fullName: '',
-        email: '',
-        password: '',
-        role: 'Requester',
-        businessUnit: businessUnits[0] || '',
-        designation: '',
-      })
-      setShowAddUser(false)
-      notify('success', `User ${createdEmail} created`)
-    } catch (err) {
-      notify('error', err instanceof Error ? err.message : 'Failed to create user')
-    } finally {
-      setSaving(false)
     }
   }
 
@@ -302,7 +210,7 @@ export function PcpAdmin() {
         </div>
         <div>
           <h1 className="text-xl font-bold sm:text-2xl">Administration</h1>
-          <p className="text-muted-foreground">Approval chains, master data, and user access</p>
+          <p className="text-muted-foreground">Approval chains and master data · manage people under Employees</p>
         </div>
       </div>
 
@@ -312,7 +220,6 @@ export function PcpAdmin() {
         {([
           ['chains', 'Approval Chains'],
           ['masters', 'Masters'],
-          ['users', 'Users'],
         ] as const).map(([key, label]) => (
           <button
             key={key}
@@ -486,178 +393,6 @@ export function PcpAdmin() {
           </Card>
         </div>
       )}
-
-      {tab === 'users' && (
-        <div className="space-y-4">
-          <Card>
-            <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <CardTitle>Add User</CardTitle>
-              <Button size="sm" variant="outline" onClick={() => setShowAddUser((v) => !v)}>
-                <Plus className="mr-1 h-4 w-4" />
-                {showAddUser ? 'Hide form' : 'New user'}
-              </Button>
-            </CardHeader>
-            {showAddUser && (
-              <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div>
-                  <label className="mb-1 block text-xs text-muted-foreground">Full name</label>
-                  <Input
-                    value={newUser.fullName}
-                    onChange={(e) => setNewUser({ ...newUser, fullName: e.target.value })}
-                    placeholder="Muhammad Imran"
-                  />
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs text-muted-foreground">Email (login)</label>
-                  <Input
-                    type="email"
-                    value={newUser.email}
-                    onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                    placeholder="name@company.com"
-                  />
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs text-muted-foreground">Password</label>
-                  <Input
-                    type="password"
-                    value={newUser.password}
-                    onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                    placeholder="Min. 6 characters"
-                    autoComplete="new-password"
-                  />
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs text-muted-foreground">PCP role</label>
-                  <Select value={newUser.role} onChange={(e) => setNewUser({ ...newUser, role: e.target.value as PcpRole })}>
-                    {PCP_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-                  </Select>
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs text-muted-foreground">Business unit</label>
-                  <Select value={newUser.businessUnit} onChange={(e) => setNewUser({ ...newUser, businessUnit: e.target.value })}>
-                    {businessUnits.map((bu) => <option key={bu} value={bu}>{bu}</option>)}
-                  </Select>
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs text-muted-foreground">Designation (optional)</label>
-                  <Input
-                    value={newUser.designation}
-                    onChange={(e) => setNewUser({ ...newUser, designation: e.target.value })}
-                    placeholder="Project Coordinator"
-                  />
-                </div>
-                <div className="flex items-end sm:col-span-2 lg:col-span-3">
-                  <Button onClick={() => void createUser()} disabled={saving}>
-                    Create user
-                  </Button>
-                </div>
-              </CardContent>
-            )}
-          </Card>
-
-          <Card>
-            <CardHeader><CardTitle>PCP Users</CardTitle></CardHeader>
-            <CardContent className="table-scroll">
-              <table className="w-full min-w-[720px] text-sm">
-                <thead>
-                  <tr className="border-b text-left text-muted-foreground">
-                    <th className="py-2 pr-3">Name</th>
-                    <th className="py-2 pr-3">Role</th>
-                    <th className="py-2 pr-3">Business Unit</th>
-                    <th className="py-2 pr-3">Active</th>
-                    <th className="py-2 pr-3">On Leave</th>
-                    <th className="py-2 pr-3">Approval Delegate</th>
-                    <th className="py-2 pr-3">New password</th>
-                    <th className="py-2">Save</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(users as ExtendedPcpUser[]).map((u) => (
-                    <UserRow key={u.id} user={u} businessUnits={businessUnits} allUsers={users} onSave={updateUser} />
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-        </div>
-      )}
     </div>
-  )
-}
-
-function UserRow({
-  user,
-  businessUnits,
-  allUsers,
-  onSave,
-}: {
-  user: ExtendedPcpUser
-  businessUnits: string[]
-  allUsers: PcpUser[]
-  onSave: (u: ExtendedPcpUser, password?: string) => Promise<void>
-}) {
-  const [draft, setDraft] = useState(user)
-  const [newPassword, setNewPassword] = useState('')
-  const [saving, setSaving] = useState(false)
-
-  useEffect(() => setDraft(user), [user])
-
-  const save = async () => {
-    setSaving(true)
-    try {
-      await onSave(draft, newPassword)
-      setNewPassword('')
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  return (
-    <tr className="border-b border-border/60">
-      <td className="py-3 pr-3">
-        <p className="font-medium">{draft.name}</p>
-        <p className="text-xs text-muted-foreground">{draft.email}</p>
-      </td>
-      <td className="py-3 pr-3">
-        <Select value={draft.role} onChange={(e) => setDraft({ ...draft, role: e.target.value as PcpRole })}>
-          {PCP_ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
-        </Select>
-      </td>
-      <td className="py-3 pr-3">
-        <Select value={draft.businessUnit} onChange={(e) => setDraft({ ...draft, businessUnit: e.target.value })}>
-          {businessUnits.map((bu) => <option key={bu} value={bu}>{bu}</option>)}
-        </Select>
-      </td>
-      <td className="py-3 pr-3 text-center">
-        <input type="checkbox" checked={draft.active} onChange={(e) => setDraft({ ...draft, active: e.target.checked })} />
-      </td>
-      <td className="py-3 pr-3 text-center">
-        <input type="checkbox" checked={Boolean(draft.onLeave)} onChange={(e) => setDraft({ ...draft, onLeave: e.target.checked })} />
-      </td>
-      <td className="py-3 pr-3">
-        <Select
-          value={draft.approvalDelegateId || ''}
-          onChange={(e) => setDraft({ ...draft, approvalDelegateId: e.target.value || null })}
-        >
-          <option value="">None</option>
-          {allUsers.filter((x) => x.id !== draft.id).map((x) => (
-            <option key={x.id} value={x.id}>{x.name}</option>
-          ))}
-        </Select>
-      </td>
-      <td className="py-3 pr-3">
-        <Input
-          type="password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="Leave blank to keep"
-          className="min-w-[140px] text-xs"
-          autoComplete="new-password"
-        />
-      </td>
-      <td className="py-3">
-        <Button size="sm" variant="outline" disabled={saving} onClick={() => void save()}>Save</Button>
-      </td>
-    </tr>
   )
 }

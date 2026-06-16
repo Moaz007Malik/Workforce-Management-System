@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { repos } from '../repositories/index.js';
 import { logAudit } from '../services/auditService.js';
 import { createNotification } from '../services/notificationService.js';
-import { verifyAuthToken } from '../services/authService.js';
+import { requireAuth, optionalAuth } from '../middleware/auth.js';
 import {
   listAttendance,
   getTodayAttendance,
@@ -12,6 +12,7 @@ import {
   acceptAttendance,
   validateAttendance,
 } from '../services/attendanceService.js';
+import { filterEmployeesForActor, normalizeSystemRole } from '../services/roleService.js';
 
 const router = Router();
 
@@ -20,34 +21,34 @@ function sanitizeBody(body) {
   return rest;
 }
 
-function requireAuth(req, res, next) {
-  const header = req.headers.authorization || '';
-  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
-  if (!token) return res.status(401).json({ error: 'Not authenticated' });
-  try {
-    req.auth = verifyAuthToken(token);
-    next();
-  } catch {
-    res.status(401).json({ error: 'Invalid or expired session' });
-  }
-}
-
 function requireAttendanceManager(req, res, next) {
-  const role = req.auth?.systemRole;
-  if (role !== 'Admin' && role !== 'HR') {
-    return res.status(403).json({ error: 'Only Admin or HR can manage attendance' });
+  const role = normalizeSystemRole(req.auth?.systemRole);
+  if (role !== 'Admin' && role !== 'HR' && role !== 'Department Manager') {
+    return res.status(403).json({ error: 'Insufficient permissions to manage attendance' });
   }
   next();
 }
 
-router.get('/', async (req, res) => {
+router.get('/', optionalAuth, async (req, res) => {
   try {
     const { date, employeeId, applyAutoAbsent } = req.query;
-    const records = await listAttendance({
+    let records = await listAttendance({
       date: date || undefined,
       employeeId: employeeId || undefined,
       applyAutoAbsent: applyAutoAbsent !== 'false',
     });
+
+    if (req.auth) {
+      const role = normalizeSystemRole(req.auth.systemRole);
+      if (role === 'Employee') {
+        records = records.filter((r) => r.employeeId === req.auth.sub);
+      } else if (role === 'Department Manager') {
+        const employees = await repos.employees.getAll();
+        const visible = new Set(filterEmployeesForActor(req.auth, employees).map((e) => e.id));
+        records = records.filter((r) => visible.has(r.employeeId));
+      }
+    }
+
     res.json(records);
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -1,4 +1,5 @@
 import type { Employee, PcpRole, SystemRole } from '@/types'
+import { normalizeSystemRole } from '@/lib/roles'
 
 export function syncPcpFromEmployee(employee: Employee | undefined): {
   systemRole: SystemRole
@@ -6,11 +7,11 @@ export function syncPcpFromEmployee(employee: Employee | undefined): {
   businessUnit: string
 } {
   if (!employee) {
-    return { systemRole: 'Manager', pcpRole: null, businessUnit: 'Construction – North' }
+    return { systemRole: 'Employee', pcpRole: null, businessUnit: '' }
   }
   return {
-    systemRole: employee.systemRole ?? 'Manager',
+    systemRole: normalizeSystemRole(employee.systemRole),
     pcpRole: employee.pcpRole ?? null,
-    businessUnit: employee.businessUnit || employee.department || 'Construction – North',
+    businessUnit: employee.businessUnit || employee.department || '',
   }
 }

@@ -27,7 +27,9 @@ import pcpRoutes from './pcp.js';
 import authRoutes from './auth.js';
 import chatRoutes from './chat.js';
 import attendanceRoutes from './attendance.js';
-import { sanitizeEmployee, hashPassword, defaultPasswordForRole } from '../services/authService.js';
+import employeeRoutes from './employees.js';
+import { requireAuth, optionalAuth } from '../middleware/auth.js';
+import { canViewEmployee, canManageEmployees } from '../services/roleService.js';
 
 const router = Router();
 
@@ -132,52 +134,7 @@ function createCrudRoutes(name, repo, options = {}) {
   return r;
 }
 
-router.use('/employees', createCrudRoutes('Employee', repos.employees, {
-  serialize: sanitizeEmployee,
-  transformCreate: (body) => {
-    const data = sanitizeBody(body);
-    if (!data.employeeId) {
-      data.employeeId = `EMP${String(Date.now()).slice(-6)}`;
-    }
-    const skills = Array.isArray(data.skills)
-      ? data.skills.map((s) => String(s).trim()).filter(Boolean)
-      : [];
-    return {
-      ...data,
-      skills,
-      capacityHours: data.capacityHours ?? 40,
-      hourlyRate: data.hourlyRate ?? 0,
-      monthlySalary: data.monthlySalary ?? 0,
-      status: data.status || 'Available',
-      systemRole: data.systemRole || 'Manager',
-    };
-  },
-  validate: async (data) => {
-    const errors = [];
-    if (!data.fullName?.trim()) errors.push('Full name is required');
-    if (!data.email?.trim()) errors.push('Email is required');
-    if (!data.department) errors.push('Department is required');
-    const skills = Array.isArray(data.skills) ? data.skills.filter(Boolean) : [];
-    if (skills.length === 0) errors.push('At least one skill is required');
-    return errors;
-  },
-  onCreate: async (emp) => {
-    if (!emp.passwordHash) {
-      const role = emp.systemRole || 'Manager';
-      const hash = await hashPassword(defaultPasswordForRole(role));
-      await repos.employees.update(emp.id, { passwordHash: hash });
-    }
-    await syncEmployee(emp.id);
-  },
-  onUpdate: async (old, updated) => { await syncEmployee(updated.id); },
-  onDelete: async (emp) => {
-    const tasks = await repos.tasks.getAll();
-    for (const task of tasks.filter((t) => t.assigneeId === emp.id)) {
-      await repos.tasks.update(task.id, { assigneeId: null });
-    }
-    await deleteDocumentsForEntity('employee', emp.id);
-  },
-}));
+router.use('/employees', employeeRoutes);
 
 router.use('/projects', createCrudRoutes('Project', repos.projects, {
   onCreate: async (project) => { await syncBudgetRecord(project.id); },
@@ -395,11 +352,17 @@ router.get('/audit-logs', async (req, res) => {
   }
 });
 
-router.get('/documents', async (req, res) => {
+router.get('/documents', optionalAuth, async (req, res) => {
   try {
     const { employeeId, projectId } = req.query;
     let docs = await repos.documents.getAll();
     if (employeeId) {
+      if (!req.auth) return res.status(401).json({ error: 'Not authenticated' });
+      const employee = await repos.employees.getById(employeeId);
+      if (!employee) return res.status(404).json({ error: 'Employee not found' });
+      if (!canViewEmployee(req.auth, employee)) {
+        return res.status(403).json({ error: 'Forbidden' });
+      }
       docs = docs.filter((d) => d.entityType === 'employee' && d.entityId === employeeId);
     } else if (projectId) {
       docs = docs.filter((d) => d.entityType === 'project' && d.entityId === projectId);
@@ -410,7 +373,7 @@ router.get('/documents', async (req, res) => {
   }
 });
 
-router.post('/documents', async (req, res) => {
+router.post('/documents', requireAuth, async (req, res) => {
   try {
     const { entityType, entityId, title, fileName, mimeType, content } = req.body;
     if (!entityType || !entityId || !fileName || !content) {
@@ -420,8 +383,15 @@ router.post('/documents', async (req, res) => {
       return res.status(400).json({ error: 'entityType must be employee or project' });
     }
     const entityRepo = entityType === 'employee' ? repos.employees : repos.projects;
-    if (!(await entityRepo.getById(entityId))) {
+    const entity = await entityRepo.getById(entityId);
+    if (!entity) {
       return res.status(404).json({ error: `${entityType} not found` });
+    }
+    if (entityType === 'employee' && !canViewEmployee(req.auth, entity)) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    if (entityType === 'employee' && !canManageEmployees(req.auth.systemRole) && req.auth.sub !== entityId) {
+      return res.status(403).json({ error: 'Only Admin or HR can upload employee documents' });
     }
     const buffer = Buffer.from(content, 'base64');
     if (buffer.length > MAX_DOCUMENT_BYTES) {
@@ -446,10 +416,17 @@ router.post('/documents', async (req, res) => {
   }
 });
 
-router.get('/documents/:id/download', async (req, res) => {
+router.get('/documents/:id/download', optionalAuth, async (req, res) => {
   try {
     const doc = await repos.documents.getById(req.params.id);
     if (!doc) return res.status(404).json({ error: 'Not found' });
+    if (doc.entityType === 'employee') {
+      if (!req.auth) return res.status(401).json({ error: 'Not authenticated' });
+      const employee = await repos.employees.getById(doc.entityId);
+      if (!employee || !canViewEmployee(req.auth, employee)) {
+        return res.status(403).json({ error: 'Forbidden' });
+      }
+    }
     const buffer = Buffer.from(doc.content, 'base64');
     res.setHeader('Content-Type', doc.mimeType || 'application/octet-stream');
     res.setHeader('Content-Disposition', `attachment; filename="${doc.fileName.replace(/"/g, '')}"`);
@@ -459,10 +436,19 @@ router.get('/documents/:id/download', async (req, res) => {
   }
 });
 
-router.delete('/documents/:id', async (req, res) => {
+router.delete('/documents/:id', requireAuth, async (req, res) => {
   try {
     const doc = await repos.documents.getById(req.params.id);
     if (!doc) return res.status(404).json({ error: 'Not found' });
+    if (doc.entityType === 'employee') {
+      const employee = await repos.employees.getById(doc.entityId);
+      if (!employee || !canViewEmployee(req.auth, employee)) {
+        return res.status(403).json({ error: 'Forbidden' });
+      }
+      if (!canManageEmployees(req.auth.systemRole)) {
+        return res.status(403).json({ error: 'Only Admin or HR can delete employee documents' });
+      }
+    }
     await repos.documents.delete(req.params.id);
     await logAudit('DELETE', 'Document', req.params.id, `Document removed: ${doc.title}`);
     res.json({ success: true });
@@ -482,57 +468,6 @@ router.get('/assignees/suggestions', async (req, res) => {
     const weekStart = ws ? new Date(ws) : getWeekStart();
     const [employees, tasks] = await Promise.all([repos.employees.getAll(), repos.tasks.getAll()]);
     res.json(rankAssignees(employees, tasks, requiredSkills, weekStart));
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.get('/employees/:id/capacity', async (req, res) => {
-  try {
-    const weekStart = req.query.weekStart ? new Date(req.query.weekStart) : getWeekStart();
-    const [employee, tasks] = await Promise.all([
-      repos.employees.getById(req.params.id),
-      repos.tasks.getAll(),
-    ]);
-    if (!employee) return res.status(404).json({ error: 'Employee not found' });
-    res.json(forecastCapacity(employee, tasks, weekStart));
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-router.get('/employees/:id/profile', async (req, res) => {
-  try {
-    const employee = await repos.employees.getById(req.params.id);
-    if (!employee) return res.status(404).json({ error: 'Not found' });
-    const [tasks, projects, timesheets, leaves, attendance] = await Promise.all([
-      repos.tasks.getAll(),
-      repos.projects.getAll(),
-      repos.timesheets.getAll(),
-      repos.leaves.getAll(),
-      repos.attendance.getAll(),
-    ]);
-    const empTasks = tasks.filter((t) => t.assigneeId === employee.id);
-    const projectIds = [...new Set(empTasks.map((t) => t.projectId))];
-    const assignedProjects = projects.filter((p) => projectIds.includes(p.id));
-    const allocatedHours = empTasks
-      .filter((t) => t.status !== 'Completed' && t.status !== 'Cancelled')
-      .reduce((s, t) => s + Math.max(0, (t.estimatedHours || 0) - (t.actualHours || 0)), 0);
-    const weekStart = getWeekStart();
-    const forecast = forecastCapacity(employee, tasks, weekStart);
-    res.json({
-      employee,
-      assignedProjects,
-      assignedTasks: empTasks,
-      timesheets: timesheets.filter((t) => t.employeeId === employee.id),
-      leaves: leaves.filter((l) => l.employeeId === employee.id),
-      attendance: attendance
-        .filter((a) => a.employeeId === employee.id)
-        .sort((a, b) => b.date.localeCompare(a.date)),
-      allocatedHours,
-      utilization: employee.utilization ?? forecast.utilization,
-      forecast,
-    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

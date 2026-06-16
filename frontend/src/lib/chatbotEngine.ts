@@ -316,12 +316,12 @@ export function tryDashboardFaq(message: string): { matched: boolean; reply: str
       reply: [
         '## Active Projects & Budgets',
         '',
-        '**3** active projects in the workforce portfolio.',
+        '**3** active projects in the portfolio.',
         mdTable(rows),
         '',
         `**Combined budget:** ${formatCurrency(16700000)} · **Combined revenue:** ${formatCurrency(19500000)}`,
         '',
-        '_Source: WMS project database · Jun 2026_',
+        '_Source: Workforce database · Jun 2026_',
       ].join('\n'),
     }
   }

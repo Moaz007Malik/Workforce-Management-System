@@ -5,7 +5,7 @@ import {
   deleteDocument,
   fetchDocuments,
   formatDocumentSize,
-  getDocumentDownloadUrl,
+  downloadDocument,
   uploadDocumentFile,
 } from '@/lib/documents'
 import type { DocumentRecord } from '@/types'
@@ -17,6 +17,7 @@ interface DocumentUploadSectionProps {
   onPendingChange: (files: File[]) => void
   disabled?: boolean
   embedded?: boolean
+  required?: boolean
 }
 
 export function DocumentUploadSection({
@@ -26,6 +27,7 @@ export function DocumentUploadSection({
   onPendingChange,
   disabled,
   embedded,
+  required,
 }: DocumentUploadSectionProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [saved, setSaved] = useState<DocumentRecord[]>([])
@@ -89,8 +91,10 @@ export function DocumentUploadSection({
           <div className="flex items-center gap-2">
             <FileText className="h-4 w-4 text-primary" />
             <div>
-              <p className="text-sm font-medium">{label}</p>
-              <p className="text-xs text-muted-foreground">Contracts, IDs, specs, reports — up to 5 MB each</p>
+              <p className="text-sm font-medium">{label}{required ? ' *' : ''}</p>
+              <p className="text-xs text-muted-foreground">
+                {required ? 'Required — ' : ''}Contracts, IDs, certificates — up to 5 MB each
+              </p>
             </div>
           </div>
         )}
@@ -157,15 +161,15 @@ export function DocumentUploadSection({
                 </div>
               </div>
               <div className="flex shrink-0 gap-0.5">
-                <a
-                  href={getDocumentDownloadUrl(doc.id)}
-                  download={doc.fileName}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="action-icon-btn inline-flex items-center justify-center rounded-lg hover:bg-muted"
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="action-icon-btn shrink-0"
+                  onClick={() => downloadDocument(doc.id, doc.fileName)}
                 >
                   <Download />
-                </a>
+                </Button>
                 <Button type="button" variant="ghost" size="icon" className="action-icon-btn text-destructive" onClick={() => removeSaved(doc.id)}>
                   <Trash2 />
                 </Button>

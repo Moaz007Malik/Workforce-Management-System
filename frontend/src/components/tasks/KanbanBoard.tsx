@@ -16,15 +16,15 @@ import { useEmployeeStore } from '@/stores/useEmployeeStore'
 
 const COLUMNS = ['Backlog', 'To Do', 'In Progress', 'Review', 'Completed'] as const
 
-function TaskCard({ task, isDragging, selected }: { task: Task; isDragging?: boolean; selected?: boolean }) {
+function TaskCard({ task, isDragging, selected, readOnly }: { task: Task; isDragging?: boolean; selected?: boolean; readOnly?: boolean }) {
   const { employees } = useEmployeeStore()
   const assignee = employees.find((e) => e.id === task.assigneeId)
 
   return (
-    <Card className={cn('cursor-grab', isDragging && 'shadow-lg ring-2 ring-primary/30', selected && 'ring-2 ring-primary')}>
+    <Card className={cn(readOnly ? 'cursor-default' : 'cursor-grab', isDragging && 'shadow-lg ring-2 ring-primary/30', selected && 'ring-2 ring-primary')}>
       <CardContent className="p-3 space-y-2">
         <div className="flex items-start gap-2">
-          <GripVertical className="h-4 w-4 mt-0.5 text-muted-foreground shrink-0" />
+          {!readOnly && <GripVertical className="h-4 w-4 mt-0.5 text-muted-foreground shrink-0" />}
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium leading-tight">{task.title}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -51,18 +51,18 @@ function TaskCard({ task, isDragging, selected }: { task: Task; isDragging?: boo
   )
 }
 
-function SortableTask({ task, selected, onSelect }: { task: Task; selected?: boolean; onSelect?: (id: string) => void }) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+function SortableTask({ task, selected, onSelect, readOnly }: { task: Task; selected?: boolean; onSelect?: (id: string) => void; readOnly?: boolean }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: readOnly })
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 }
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners} onClick={() => onSelect?.(task.id)}>
-      <TaskCard task={task} selected={selected} />
+    <div ref={setNodeRef} style={style} {...(readOnly ? {} : { ...attributes, ...listeners })} onClick={() => onSelect?.(task.id)}>
+      <TaskCard task={task} selected={selected} readOnly={readOnly} />
     </div>
   )
 }
 
-function KanbanColumn({ column, tasks, selectedTaskId, onTaskSelect }: { column: string; tasks: Task[]; selectedTaskId?: string; onTaskSelect?: (id: string) => void }) {
+function KanbanColumn({ column, tasks, selectedTaskId, onTaskSelect, readOnly }: { column: string; tasks: Task[]; selectedTaskId?: string; onTaskSelect?: (id: string) => void; readOnly?: boolean }) {
   const { setNodeRef, isOver } = useDroppable({ id: column })
   const columnTasks = tasks.filter((t) => t.kanbanStatus === column)
 
@@ -81,7 +81,7 @@ function KanbanColumn({ column, tasks, selectedTaskId, onTaskSelect }: { column:
       >
         <SortableContext items={columnTasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
           {columnTasks.map((task) => (
-            <SortableTask key={task.id} task={task} selected={task.id === selectedTaskId} onSelect={onTaskSelect} />
+            <SortableTask key={task.id} task={task} selected={task.id === selectedTaskId} onSelect={onTaskSelect} readOnly={readOnly} />
           ))}
         </SortableContext>
       </div>
@@ -92,10 +92,13 @@ function KanbanColumn({ column, tasks, selectedTaskId, onTaskSelect }: { column:
 interface KanbanBoardProps {
   selectedTaskId?: string
   onTaskSelect?: (id: string) => void
+  tasks?: Task[]
+  readOnly?: boolean
 }
 
-export function KanbanBoard({ selectedTaskId, onTaskSelect }: KanbanBoardProps) {
-  const { tasks, updateTask } = useTaskStore()
+export function KanbanBoard({ selectedTaskId, onTaskSelect, tasks: tasksOverride, readOnly = false }: KanbanBoardProps) {
+  const { tasks: storeTasks, updateTask } = useTaskStore()
+  const tasks = tasksOverride ?? storeTasks
   const [activeTask, setActiveTask] = useState<Task | null>(null)
 
   const sensors = useSensors(
@@ -109,6 +112,7 @@ export function KanbanBoard({ selectedTaskId, onTaskSelect }: KanbanBoardProps) 
   }
 
   const handleDragEnd = async (event: DragEndEvent) => {
+    if (readOnly) return
     setActiveTask(null)
     const { active, over } = event
     if (!over) return
@@ -136,7 +140,7 @@ export function KanbanBoard({ selectedTaskId, onTaskSelect }: KanbanBoardProps) 
     <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="flex gap-4 overflow-x-auto pb-4">
         {COLUMNS.map((col) => (
-          <KanbanColumn key={col} column={col} tasks={tasks} selectedTaskId={selectedTaskId} onTaskSelect={onTaskSelect} />
+          <KanbanColumn key={col} column={col} tasks={tasks} selectedTaskId={selectedTaskId} onTaskSelect={onTaskSelect} readOnly={readOnly} />
         ))}
       </div>
       <DragOverlay>{activeTask ? <TaskCard task={activeTask} isDragging /> : null}</DragOverlay>

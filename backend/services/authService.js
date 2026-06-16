@@ -4,9 +4,13 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'wms-dev-secret-change-in-production';
 const JWT_EXPIRES = process.env.JWT_EXPIRES || '7d';
 
+import { normalizeSystemRole } from './roleService.js';
+
 export function defaultPasswordForRole(systemRole) {
-  if (systemRole === 'Admin') return 'Admin@123';
-  if (systemRole === 'HR') return 'Hr@123';
+  const role = normalizeSystemRole(systemRole);
+  if (role === 'Admin') return 'Admin@123';
+  if (role === 'HR') return 'Hr@123';
+  if (role === 'Employee') return 'Employee@123';
   return 'Manager@123';
 }
 
@@ -17,7 +21,7 @@ export function defaultPasswordForEmployee(employee) {
   if (pcp === 'Admin') return 'Admin@123';
   if (pcp === 'Approver') return 'Approver@123';
   if (pcp === 'Requester') return 'Requester@123';
-  return defaultPasswordForRole(employee?.systemRole || 'Manager');
+  return defaultPasswordForRole(employee?.systemRole || 'Employee');
 }
 
 export async function hashPassword(plain) {
@@ -40,7 +44,7 @@ export function signAuthToken(employee) {
     {
       sub: employee.id,
       email: employee.email,
-      systemRole: employee.systemRole || 'Manager',
+      systemRole: normalizeSystemRole(employee.systemRole || 'Employee'),
       pcpRole: employee.pcpRole || null,
       businessUnit: employee.businessUnit || employee.department,
     },

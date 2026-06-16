@@ -1,6 +1,6 @@
 import {
   FilePlus, List, CheckSquare, History,
-  BarChart3, Sparkles, Building2, LayoutDashboard, Bot, Shield, Users, Database, ClipboardCheck,
+  BarChart3, Sparkles, Building2, LayoutDashboard, Bot, Shield, Database, ClipboardCheck,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { PcpRole } from '@/types'
@@ -44,7 +44,6 @@ export function getPcpNavForRole(role: PcpRole | null | undefined): PcpNavItem[]
         { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
         { to: '/admin', icon: Shield, label: 'Admin' },
         { to: '/admin?tab=masters', icon: Database, label: 'Masters' },
-        { to: '/admin?tab=users', icon: Users, label: 'Users' },
         assistant,
       ]
     case 'Executive':

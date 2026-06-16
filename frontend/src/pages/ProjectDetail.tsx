@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate, Navigate } from 'react-router-dom'
 import { ArrowLeft, AlertTriangle, Bug, Plus, Pencil, Trash2, FilePlus } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -12,17 +12,17 @@ import { RiskIssueFormDialog } from '@/components/forms/RiskIssueFormDialog'
 import { EntityDocumentsCard } from '@/components/documents/EntityDocumentsCard'
 import { ProjectPcpsCard } from '@/components/pcp/ProjectPcpsCard'
 import { api } from '@/lib/api'
-import { useAppStore } from '@/stores/useAppStore'
-import { canCreatePcp } from '@/lib/roles'
+import { canCreatePcp, isEmployeeRole } from '@/lib/roles'
+import { useEffectiveRoles } from '@/lib/useEffectiveRoles'
 import { useEmployeeStore } from '@/stores/useEmployeeStore'
 import { useProjectStore } from '@/stores/useProjectStore'
 import { useTaskStore } from '@/stores/useTaskStore'
-import { cn, formatCurrency, getStatusColor } from '@/lib/utils'
-import type { Risk, Issue, Employee, Project, PcpRequest } from '@/types'
+import { cn, formatCurrency, getStatusColor, getPriorityColor } from '@/lib/utils'
+import type { Risk, Issue, Employee, Project, PcpRequest, Task } from '@/types'
 
 interface ProjectDetails {
   project: Project
-  tasks: unknown[]
+  tasks: Task[]
   assignedResources: Employee[]
   wbs: WBSNode[]
   risks: Risk[]
@@ -35,9 +35,10 @@ interface ProjectDetails {
 export function ProjectDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { systemRole, pcpRole } = useAppStore()
+  const { systemRole, pcpRole, currentUserId } = useEffectiveRoles()
+  const isEmployee = isEmployeeRole(systemRole)
   const { employees, fetchEmployees } = useEmployeeStore()
-  const showCreatePcp = canCreatePcp(systemRole, pcpRole)
+  const showCreatePcp = canCreatePcp(systemRole, pcpRole) && !isEmployee
   const { projects, fetchProjects, deleteProject } = useProjectStore()
   const { fetchTasks } = useTaskStore()
   const [data, setData] = useState<ProjectDetails | null>(null)
@@ -55,11 +56,11 @@ export function ProjectDetail() {
   }, [id])
 
   useEffect(() => {
-    fetchEmployees()
+    if (!isEmployee) fetchEmployees()
     fetchProjects()
     fetchTasks()
     load()
-  }, [load, fetchEmployees, fetchProjects, fetchTasks])
+  }, [load, fetchEmployees, fetchProjects, fetchTasks, isEmployee])
 
   const handleDelete = async () => {
     if (!data || !confirm(`Delete project "${data.project.name}"?`)) return
@@ -69,7 +70,15 @@ export function ProjectDetail() {
 
   if (loading || !data) return <Skeleton className="h-96" />
 
-  const { project, wbs, risks, issues, budget, assignedResources, progress, pcps = [] } = data
+  const { project, tasks, wbs, risks, issues, budget, assignedResources, progress, pcps = [] } = data
+  const myTasks = isEmployee && currentUserId
+    ? tasks.filter((t) => t.assigneeId === currentUserId)
+    : tasks
+
+  if (isEmployee && myTasks.length === 0) {
+    return <Navigate to="/projects" replace />
+  }
+
   const healthColors = { green: 'text-emerald-600', yellow: 'text-amber-600', red: 'text-red-600' }
 
   return (
@@ -89,12 +98,38 @@ export function ProjectDetail() {
               <Button className="bg-primary hover:bg-primary/90"><FilePlus className="h-4 w-4" /> Create PCP</Button>
             </Link>
           )}
-          <Button variant="outline" onClick={() => setEditOpen(true)}><Pencil className="h-4 w-4" /> Edit</Button>
-          <Button variant="outline" onClick={() => setTaskOpen(true)}><Plus className="h-4 w-4" /> Add Task</Button>
-          <Button variant="destructive" onClick={handleDelete}><Trash2 className="h-4 w-4" /></Button>
+          {!isEmployee && (
+            <>
+              <Button variant="outline" onClick={() => setEditOpen(true)}><Pencil className="h-4 w-4" /> Edit</Button>
+              <Button variant="outline" onClick={() => setTaskOpen(true)}><Plus className="h-4 w-4" /> Add Task</Button>
+              <Button variant="destructive" onClick={handleDelete}><Trash2 className="h-4 w-4" /></Button>
+            </>
+          )}
         </div>
       </div>
 
+      {isEmployee ? (
+        <Card>
+          <CardHeader><CardTitle>My Tasks ({myTasks.length})</CardTitle></CardHeader>
+          <CardContent className="space-y-2">
+            {myTasks.map((t) => (
+              <div key={t.id} className="rounded-lg border border-border p-3 text-sm">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="font-medium">{t.title}</p>
+                  <span className={cn('shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium', getPriorityColor(t.priority))}>{t.priority}</span>
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <Badge variant="secondary">{t.status}</Badge>
+                  <Badge variant="outline">{t.kanbanStatus}</Badge>
+                  <span className="text-xs text-muted-foreground">{t.actualHours}/{t.estimatedHours}h</span>
+                  {t.dueDate && <span className="text-xs text-muted-foreground">Due {t.dueDate}</span>}
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      ) : (
+      <>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card><CardContent className="p-4"><p className="text-xs text-muted-foreground">Budget</p><p className="text-xl font-bold">{formatCurrency(budget.budget)}</p></CardContent></Card>
         <Card><CardContent className="p-4"><p className="text-xs text-muted-foreground">Actual Cost</p><p className="text-xl font-bold">{formatCurrency(budget.actualCost)}</p></CardContent></Card>
@@ -158,11 +193,17 @@ export function ProjectDetail() {
           <ProjectPcpsCard projectId={project.id} projectName={project.name} pcps={pcps} canCreate={showCreatePcp} />
         </div>
       </div>
+      </>
+      )}
 
+      {!isEmployee && (
+      <>
       <ProjectFormDialog open={editOpen} onClose={() => setEditOpen(false)} onSaved={load} project={project} employees={employees} />
       <TaskFormDialog open={taskOpen} onClose={() => setTaskOpen(false)} onSaved={() => { load(); fetchTasks() }} projects={projects} employees={employees} defaultProjectId={project.id} />
       <RiskIssueFormDialog open={riskOpen} onClose={() => setRiskOpen(false)} onSaved={load} type="risk" projectId={project.id} employees={employees} />
       <RiskIssueFormDialog open={issueOpen} onClose={() => setIssueOpen(false)} onSaved={load} type="issue" projectId={project.id} employees={employees} />
+      </>
+      )}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { getAuthToken } from '@/lib/auth'
 import { api } from '@/lib/api'
 import type { DocumentRecord } from '@/types'
 
@@ -21,6 +22,21 @@ export function formatDocumentSize(bytes: number): string {
 
 export function getDocumentDownloadUrl(id: string): string {
   return `${resolveApiBase()}/documents/${id}/download`
+}
+
+export async function downloadDocument(id: string, fileName: string) {
+  const token = getAuthToken()
+  const res = await fetch(getDocumentDownloadUrl(id), {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  })
+  if (!res.ok) throw new Error('Download failed')
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName
+  a.click()
+  URL.revokeObjectURL(url)
 }
 
 export function fileToBase64(file: File): Promise<string> {

@@ -5,6 +5,7 @@ import {
   FileText, Clock, AlertTriangle, FilePlus, CheckSquare, Download,
 } from 'lucide-react'
 import { DashboardExportDialog } from '@/components/dashboard/DashboardExportDialog'
+import { EmployeeDashboard } from '@/components/dashboard/EmployeeDashboard'
 import { KPICard } from '@/components/dashboard/KPICard'
 import { DashboardCharts } from '@/components/dashboard/DashboardCharts'
 import { PcpAllBusPanel } from '@/components/pcp/PcpAllBusPanel'
@@ -15,8 +16,20 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useDashboardStore } from '@/stores/useDashboardStore'
 import { usePcpStore } from '@/stores/usePcpStore'
 import { useEffectiveRoles } from '@/lib/useEffectiveRoles'
-import { canCreatePcp, canViewOrgFinancials, isPcpAdminScope } from '@/lib/roles'
+import { canCreatePcp, canViewOrgFinancials, isEmployeeRole, isPcpAdminScope, normalizeSystemRole } from '@/lib/roles'
+import { api } from '@/lib/api'
 import { formatAed, formatCurrency, formatPercent } from '@/lib/utils'
+import type { Project, Task, Timesheet, Attendance } from '@/types'
+
+interface EmployeeProfileSummary {
+  assignedProjects: Project[]
+  assignedTasks: Task[]
+  timesheets: Timesheet[]
+  attendance?: Attendance[]
+  allocatedHours: number
+  utilization: number
+  employee: { capacityHours: number }
+}
 
 export function Dashboard() {
   const { metrics, loading, fetchMetrics } = useDashboardStore()
@@ -24,11 +37,26 @@ export function Dashboard() {
   const showFinancials = canViewOrgFinancials(systemRole, pcpRole)
   const { requests, masters, loading: pcpLoading, fetchRequests, fetchMasters } = usePcpStore()
   const isHr = systemRole === 'HR'
-  const showPcpData = systemRole === 'Admin' || isHr || (systemRole === 'Manager' && !!pcpRole)
+  const isEmployee = isEmployeeRole(systemRole)
+  const showPcpData = systemRole === 'Admin' || isHr || (normalizeSystemRole(systemRole) === 'Department Manager' && !!pcpRole)
   const isPcpAdmin = isPcpAdminScope(systemRole, pcpRole)
   const [exportOpen, setExportOpen] = useState(false)
+  const [employeeData, setEmployeeData] = useState<EmployeeProfileSummary | null>(null)
+  const [employeeLoading, setEmployeeLoading] = useState(false)
 
-  useEffect(() => { fetchMetrics() }, [fetchMetrics])
+  useEffect(() => {
+    if (!isEmployee || !currentUserId) return
+    setEmployeeLoading(true)
+    api.get<EmployeeProfileSummary>(`/employees/${currentUserId}/profile`)
+      .then(setEmployeeData)
+      .catch(() => setEmployeeData(null))
+      .finally(() => setEmployeeLoading(false))
+  }, [isEmployee, currentUserId])
+
+  useEffect(() => {
+    if (isEmployee) return
+    fetchMetrics()
+  }, [fetchMetrics, isEmployee])
 
   useEffect(() => {
     if (!showPcpData) return
@@ -49,6 +77,40 @@ export function Dashboard() {
     const slaAtRisk = requests.filter((r) => r.status === 'In Approval' && (r.slaHoursRemaining ?? 999) <= 24).length
     return { total: requests.length, inApproval, approved, draft, monthly, slaAtRisk }
   }, [showPcpData, requests])
+
+  if (isEmployee) {
+    if (employeeLoading || !employeeData) {
+      return (
+        <div className="space-y-6">
+          <Skeleton className="h-8 w-64" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-32" />)}
+          </div>
+        </div>
+      )
+    }
+
+    const projectMap = Object.fromEntries(employeeData.assignedProjects.map((p) => [p.id, p.name]))
+
+    return (
+      <div className="space-y-4 animate-fade-in min-w-0 sm:space-y-6">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight sm:text-2xl">My Dashboard</h1>
+          <p className="text-sm text-muted-foreground">Your tasks, projects, and workload</p>
+        </div>
+        <EmployeeDashboard
+          assignedProjects={employeeData.assignedProjects}
+          assignedTasks={employeeData.assignedTasks}
+          timesheets={employeeData.timesheets}
+          attendance={employeeData.attendance}
+          utilization={employeeData.utilization}
+          allocatedHours={employeeData.allocatedHours}
+          capacityHours={employeeData.employee.capacityHours}
+          projectMap={projectMap}
+        />
+      </div>
+    )
+  }
 
   if (loading || !metrics) {
     return (
@@ -112,12 +174,14 @@ export function Dashboard() {
             subtitle={`${kpis.totalProjects} total · ${kpis.completedProjects} completed`}
           />
         )}
+        {!isHr && (
         <KPICard
           title="Employees"
           value={kpis.totalEmployees}
           icon={Users}
           subtitle={`${kpis.availableResources} available · ${kpis.allocatedResources} allocated`}
         />
+        )}
         {!isHr && showFinancials && (
           <>
             <KPICard

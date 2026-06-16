@@ -670,7 +670,7 @@ router.post('/assistant', async (req, res) => {
       }));
       return res.json({
         text: `## Active Projects\n\n**${active.length}** active project(s) in portfolio.${mdTable(rows)}`,
-        source: 'WMS project database',
+        source: 'Workforce database',
       });
     }
 
@@ -758,14 +758,14 @@ router.post('/assistant', async (req, res) => {
       }
       return res.json({
         text: `## AI Insights\n\n${pcpInsights.weeklySummary}\n\nOpen **AI Insights** for forecasts and sourcing cards.`,
-        source: 'WMS Assistant — rule-based insights',
+        source: 'Assistant — rule-based insights',
         actions: ['View AI Insights'],
       });
     }
 
     res.json({
       text: '## How I can help\n\n- Vacant positions & electrician roles\n- Budget variance by cost center\n- Revision comparisons\n- PCP summaries & pending approvals\n- Active projects & React skills\n\nTry one of the suggested questions below.',
-      source: 'WMS Assistant — rule-based assistant',
+      source: 'Assistant — rule-based assistant',
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

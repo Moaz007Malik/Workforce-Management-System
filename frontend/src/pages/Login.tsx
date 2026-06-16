@@ -45,7 +45,7 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-white to-blue-50/40 p-4 dark:from-slate-950 dark:via-background dark:to-blue-950/20">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 via-white to-teal-50/40 p-4 dark:from-slate-950 dark:via-background dark:to-teal-950/20">
       <div className="w-full max-w-md space-y-4 animate-fade-in min-w-0 sm:space-y-6">
         <div className="text-center">
           <img src="/logo.svg" alt={APP_NAME} className="mx-auto mb-4 h-14 w-14 rounded-xl object-contain shadow-sm" />
@@ -66,7 +66,7 @@ export function Login() {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="name@company.com"
+                  placeholder="name@wms.com"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(null) }}
                   required

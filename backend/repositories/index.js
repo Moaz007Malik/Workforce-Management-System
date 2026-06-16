@@ -19,6 +19,8 @@ import {
   PcpUser,
   PcpApprovalChain,
   PcpMasterConfig,
+  PerformanceReview,
+  WorkAssignment,
 } from '../models/index.js';
 
 export const repos = {
@@ -41,4 +43,6 @@ export const repos = {
   pcpUsers: new MongoRepository(PcpUser),
   pcpApprovalChains: new MongoRepository(PcpApprovalChain),
   pcpMasterConfig: new MongoRepository(PcpMasterConfig),
+  performanceReviews: new MongoRepository(PerformanceReview),
+  workAssignments: new MongoRepository(WorkAssignment),
 };

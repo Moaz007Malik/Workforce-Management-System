@@ -37,8 +37,8 @@ export async function sendDashboardReportEmail({ to, pdfBase64, fileName }) {
     from: process.env.SMTP_FROM || process.env.SMTP_USER,
     to: to.trim(),
     subject: 'Workforce Management System — Dashboard Report',
-    text: 'Please find your Workforce Management System dashboard report attached.',
-    html: '<p>Please find your <strong>Workforce Management System dashboard report</strong> attached.</p>',
+    text: 'Please find your dashboard report attached.',
+    html: '<p>Please find your <strong>Workforce Management System</strong> dashboard report attached.</p>',
     attachments: [attachment],
   });
 
