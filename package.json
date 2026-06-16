@@ -8,7 +8,7 @@
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "install:all": "cd backend && npm install && cd ../frontend && npm install",
-    "seed": "cd backend && npm run seed",
+    "seed": "echo \"Seeding is disabled. Set ALLOW_SEED=true in backend/.env, then run: cd backend && npm run seed\" && exit 1",
     "build": "cd frontend && npm run build"
   },
   "devDependencies": {

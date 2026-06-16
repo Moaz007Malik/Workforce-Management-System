@@ -51,10 +51,7 @@ npm run install:all
 
 # Configure database connection
 cp backend/.env.example backend/.env
-# Edit backend/.env and set MONGODB_URI to your Atlas connection string
-
-# Seed demo data into MongoDB
-npm run seed
+# Edit backend/.env and set MONGODB_URI (database name: workforce_management)
 
 # Start both servers
 npm run dev
@@ -66,16 +63,19 @@ npm run dev
 2. Create a database user (username + password)
 3. Allow your IP in **Network Access** (or `0.0.0.0/0` for development)
 4. Copy the connection string from **Connect → Drivers**
-5. Paste it into `backend/.env` as `MONGODB_URI`, replacing `<password>` and setting the database name (e.g. `wms`)
+5. Paste it into `backend/.env` as `MONGODB_URI`, replacing `<password>` and using the database name **`workforce_management`**
 
 ```env
-MONGODB_URI=mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/wms?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://myuser:mypassword@cluster0.xxxxx.mongodb.net/workforce_management?retryWrites=true&w=majority
 ```
 
 - **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:3001
 
 ### Demo Data
+
+Demo seeding is **disabled by default**. When you are ready to load sample data into `workforce_management`, set `ALLOW_SEED=true` in `backend/.env` and run `cd backend && npm run seed` once.
+
 - 10 Employees across 4 departments
 - 5 Projects with phases and milestones
 - 50 Tasks with realistic allocations
@@ -143,12 +143,7 @@ Deploy as **two separate Vercel projects** (frontend + backend).
 
 In Atlas → **Network Access**, allow **`0.0.0.0/0`** (required — Vercel uses dynamic IPs).
 
-Seed your cloud database once from your machine:
-
-```bash
-cd backend
-npm run seed
-```
+Use a **new** Atlas database named `workforce_management` in your connection string. Demo seeding is disabled by default — do not run `npm run seed` until you set `ALLOW_SEED=true` in `backend/.env`.
 
 ### 2. Backend project (Vercel)
 

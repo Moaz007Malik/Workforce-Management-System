@@ -33,7 +33,8 @@ export async function connectDB() {
 
   if (!cache.promise) {
     cache.promise = mongoose.connect(uri, options).then((mongooseInstance) => {
-      console.log('✓ Connected to MongoDB');
+      const dbName = mongooseInstance.connection.name;
+      console.log(`✓ Connected to MongoDB (${dbName})`);
       return mongooseInstance;
     });
   }
@@ -60,7 +61,7 @@ export async function connectDB() {
         'This is almost always Atlas Network Access — your IP is not allowed:\n' +
         '1. Atlas → Network Access → Add IP Address\n' +
         '2. Click "Add Current IP Address" OR use 0.0.0.0/0 for development\n' +
-        '3. Wait 2 minutes, then run npm run seed again\n\n' +
+        '3. Wait 2 minutes, then try connecting again\n\n' +
         'Also check: cluster is not Paused, VPN/antivirus is off, password in .env is correct.'
       );
     }
