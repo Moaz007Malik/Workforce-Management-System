@@ -1,24 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import {
-  FolderKanban, Users, DollarSign, TrendingUp, Wallet,
-  FileText, Clock, AlertTriangle, FilePlus, CheckSquare, Download,
+  FolderKanban, Users, DollarSign, TrendingUp, Wallet, Download,
+  CheckSquare, AlertTriangle, UserCheck,
 } from 'lucide-react'
 import { DashboardExportDialog } from '@/components/dashboard/DashboardExportDialog'
 import { EmployeeDashboard } from '@/components/dashboard/EmployeeDashboard'
 import { KPICard } from '@/components/dashboard/KPICard'
 import { DashboardCharts } from '@/components/dashboard/DashboardCharts'
-import { PcpAllBusPanel } from '@/components/pcp/PcpAllBusPanel'
-import { PcpStatusChip } from '@/components/pcp/PcpStatusChip'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { DashboardWorkforceCharts } from '@/components/dashboard/DashboardWorkforceCharts'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDashboardStore } from '@/stores/useDashboardStore'
-import { usePcpStore } from '@/stores/usePcpStore'
 import { useEffectiveRoles } from '@/lib/useEffectiveRoles'
-import { canCreatePcp, canViewOrgFinancials, isEmployeeRole, isPcpAdminScope, normalizeSystemRole } from '@/lib/roles'
+import { canViewOrgFinancials, isEmployeeRole } from '@/lib/roles'
 import { api } from '@/lib/api'
-import { formatAed, formatCurrency, formatPercent } from '@/lib/utils'
+import { formatCurrency, formatPercent } from '@/lib/utils'
 import type { Project, Task, Timesheet, Attendance } from '@/types'
 
 interface EmployeeProfileSummary {
@@ -33,13 +29,10 @@ interface EmployeeProfileSummary {
 
 export function Dashboard() {
   const { metrics, loading, fetchMetrics } = useDashboardStore()
-  const { systemRole, pcpRole, businessUnit, currentUserId } = useEffectiveRoles()
+  const { systemRole, pcpRole, currentUserId } = useEffectiveRoles()
   const showFinancials = canViewOrgFinancials(systemRole, pcpRole)
-  const { requests, masters, loading: pcpLoading, fetchRequests, fetchMasters } = usePcpStore()
   const isHr = systemRole === 'HR'
   const isEmployee = isEmployeeRole(systemRole)
-  const showPcpData = systemRole === 'Admin' || isHr || (normalizeSystemRole(systemRole) === 'Department Manager' && !!pcpRole)
-  const isPcpAdmin = isPcpAdminScope(systemRole, pcpRole)
   const [exportOpen, setExportOpen] = useState(false)
   const [employeeData, setEmployeeData] = useState<EmployeeProfileSummary | null>(null)
   const [employeeLoading, setEmployeeLoading] = useState(false)
@@ -57,26 +50,6 @@ export function Dashboard() {
     if (isEmployee) return
     fetchMetrics()
   }, [fetchMetrics, isEmployee])
-
-  useEffect(() => {
-    if (!showPcpData) return
-    fetchRequests({
-      role: systemRole === 'Admin' || isHr ? 'Admin' : pcpRole!,
-      businessUnit: systemRole === 'Admin' || isHr ? '' : businessUnit,
-      userId: currentUserId,
-    })
-    fetchMasters()
-  }, [showPcpData, systemRole, isHr, pcpRole, businessUnit, currentUserId, fetchRequests, fetchMasters])
-
-  const pcpStats = useMemo(() => {
-    if (!showPcpData) return null
-    const inApproval = requests.filter((r) => r.status === 'In Approval').length
-    const approved = requests.filter((r) => r.status === 'Approved').length
-    const draft = requests.filter((r) => r.status === 'Draft').length
-    const monthly = requests.reduce((s, r) => s + (r.monthlyTotal || 0), 0)
-    const slaAtRisk = requests.filter((r) => r.status === 'In Approval' && (r.slaHoursRemaining ?? 999) <= 24).length
-    return { total: requests.length, inApproval, approved, draft, monthly, slaAtRisk }
-  }, [showPcpData, requests])
 
   if (isEmployee) {
     if (employeeLoading || !employeeData) {
@@ -124,6 +97,10 @@ export function Dashboard() {
   }
 
   const { kpis } = metrics
+  const totalTasks = kpis.totalTasks ?? metrics.taskProgress.reduce((s, t) => s + t.count, 0)
+  const completedTasks = kpis.completedTasks ?? metrics.taskProgress.find((t) => t.status === 'Completed')?.count ?? 0
+  const inProgressTasks = kpis.inProgressTasks ?? metrics.taskProgress.find((t) => t.status === 'In Progress')?.count ?? 0
+  const blockedTasks = kpis.blockedTasks ?? metrics.taskProgress.find((t) => t.status === 'Blocked')?.count ?? 0
 
   return (
     <div className="space-y-4 animate-fade-in min-w-0 sm:space-y-6">
@@ -131,26 +108,13 @@ export function Dashboard() {
         <div className="min-w-0">
           <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Dashboard</h1>
           <p className="text-sm text-muted-foreground break-words">
-            {isHr ? 'Workforce & personnel planning' : `Projects, workforce, budgets${isPcpAdmin ? ' · all business units' : pcpRole ? ` · ${businessUnit}` : ''}`}
+            {isHr ? 'Workforce overview — people, tasks, and utilization' : 'Projects, workforce, tasks, and budgets'}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" className="flex-1 sm:flex-none" onClick={() => setExportOpen(true)}>
             <Download className="h-4 w-4" /> Export
           </Button>
-        {canCreatePcp(systemRole, pcpRole) && (
-          <Link to="/pcp/new" className="flex-1 sm:flex-none">
-            <Button size="sm" className="w-full bg-primary hover:bg-primary/90 sm:w-auto">
-              <FilePlus className="h-4 w-4" /> New PCP
-            </Button>
-          </Link>
-        )}
-        {isPcpAdmin && (
-          <>
-            <Link to="/pcp/all" className="flex-1 sm:flex-none"><Button variant="outline" size="sm" className="w-full sm:w-auto"><FileText className="h-4 w-4" /> PCPs</Button></Link>
-            <Link to="/pcp/approval" className="flex-1 sm:flex-none"><Button variant="outline" size="sm" className="w-full sm:w-auto"><CheckSquare className="h-4 w-4" /> Approvals</Button></Link>
-          </>
-        )}
         </div>
       </div>
 
@@ -159,8 +123,7 @@ export function Dashboard() {
         onClose={() => setExportOpen(false)}
         metrics={metrics}
         pdfOptions={{
-          scopeLabel: isPcpAdmin ? 'All business units' : pcpRole ? businessUnit : isHr ? 'HR — organization' : 'Organization',
-          pcpStats: pcpStats ?? undefined,
+          scopeLabel: isHr ? 'HR — organization' : 'Organization',
         }}
       />
 
@@ -174,14 +137,24 @@ export function Dashboard() {
             subtitle={`${kpis.totalProjects} total · ${kpis.completedProjects} completed`}
           />
         )}
-        {!isHr && (
         <KPICard
           title="Employees"
           value={kpis.totalEmployees}
           icon={Users}
           subtitle={`${kpis.availableResources} available · ${kpis.allocatedResources} allocated`}
         />
-        )}
+        <KPICard
+          title="Total Tasks"
+          value={totalTasks}
+          icon={CheckSquare}
+          subtitle={`${completedTasks} completed · ${inProgressTasks} in progress`}
+        />
+        <KPICard
+          title="In Progress"
+          value={inProgressTasks}
+          icon={UserCheck}
+          subtitle={`${blockedTasks} blocked`}
+        />
         {!isHr && showFinancials && (
           <>
             <KPICard
@@ -205,65 +178,23 @@ export function Dashboard() {
             />
           </>
         )}
-
-        {/* Personnel cost planning — distinct from project metrics above */}
-        {pcpStats && (
-          <>
-            <KPICard
-              title="PCP Pipeline"
-              value={pcpStats.total}
-              icon={FileText}
-              subtitle={[
-                pcpStats.inApproval ? `${pcpStats.inApproval} in approval` : null,
-                pcpStats.approved ? `${pcpStats.approved} approved` : null,
-                pcpStats.draft ? `${pcpStats.draft} draft` : null,
-              ].filter(Boolean).join(' · ') || 'No requests yet'}
-            />
-            <KPICard
-              title="Planned Personnel Cost"
-              value={formatAed(pcpStats.monthly)}
-              icon={Clock}
-              subtitle="Monthly run-rate from open PCPs"
-            />
-            {isPcpAdmin && pcpStats.slaAtRisk > 0 && (
-              <KPICard
-                title="Approvals at SLA Risk"
-                value={pcpStats.slaAtRisk}
-                icon={AlertTriangle}
-                subtitle="Under 24 hours remaining"
-              />
-            )}
-          </>
+        {blockedTasks > 0 && (
+          <KPICard
+            title="Blocked Tasks"
+            value={blockedTasks}
+            icon={AlertTriangle}
+            subtitle="Needs attention"
+          />
         )}
       </div>
 
-      <div className="grid min-w-0 grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
-        {!isHr && showFinancials && <DashboardCharts metrics={metrics} />}
+      <DashboardWorkforceCharts metrics={metrics} showProjects={!isHr} />
 
-        {showPcpData && !isPcpAdmin && !pcpLoading && (
-          <Card className="min-w-0">
-            <CardHeader><CardTitle>Recent PCP Requests</CardTitle></CardHeader>
-            <CardContent className="space-y-3">
-              {requests.slice(0, 5).map((r) => (
-                <Link key={r.id} to={`/pcp/requests/${r.id}`} className="flex flex-col gap-2 rounded-lg border p-3 transition-colors hover:bg-muted/50 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="min-w-0">
-                    <p className="font-medium text-accent">{r.pcpNo}</p>
-                    <p className="text-sm text-muted-foreground break-words">{r.client} · {r.positionSummary || `${r.positions?.length} positions`}</p>
-                  </div>
-                  <PcpStatusChip status={r.status} className="self-start sm:self-center" />
-                </Link>
-              ))}
-              {!requests.length && <p className="text-sm text-muted-foreground">No PCPs in your business unit yet.</p>}
-            </CardContent>
-          </Card>
-        )}
-
-        {showPcpData && isPcpAdmin && !pcpLoading && (
-          <div className="min-w-0 lg:col-span-2">
-          <PcpAllBusPanel requests={requests} businessUnits={masters?.businessUnits} />
-          </div>
-        )}
-      </div>
+      {!isHr && showFinancials && (
+        <div className="grid min-w-0 grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
+          <DashboardCharts metrics={metrics} />
+        </div>
+      )}
     </div>
   )
 }

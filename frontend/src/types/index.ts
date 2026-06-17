@@ -225,6 +225,10 @@ export interface DashboardMetrics {
     projectGrowthTrend?: number
     monthlyCostTrend?: number
     budgetUtilizationTrend?: number
+    totalTasks?: number
+    completedTasks?: number
+    inProgressTasks?: number
+    blockedTasks?: number
   }
   projectStatusDistribution: { status: string; count: number }[]
   budgetVsActual: { name: string; budget: number; actual: number; planned: number }[]
@@ -232,6 +236,9 @@ export interface DashboardMetrics {
   monthlySpending: { month: string; cost: number }[]
   taskProgress: { status: string; count: number }[]
   kanbanCounts: Record<string, number>
+  topEmployees?: { id: string; name: string; department: string; utilization: number; allocatedHours: number; capacityHours: number }[]
+  employeesByDepartment?: { department: string; count: number }[]
+  employeesByStatus?: { status: string; count: number }[]
   projectProfitability: { projectId: string; projectName: string; budget: number; plannedCost: number; actualCost: number; remaining: number; consumption: number; health: string; revenue: number; profit: number; margin: number }[]
   employeeAllocation: { name: string; allocated: number; available: number }[]
 }

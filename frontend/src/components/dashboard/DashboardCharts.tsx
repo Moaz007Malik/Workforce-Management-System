@@ -76,27 +76,6 @@ export function DashboardCharts({ metrics }: DashboardChartsProps) {
       </Card>
 
       <Card className="min-w-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-        <CardHeader className="pb-2"><CardTitle className="text-base sm:text-lg">Resource Utilization</CardTitle></CardHeader>
-        <CardContent className="min-w-0">
-          <div className="h-[220px] w-full min-w-0 sm:h-[280px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={metrics.resourceUtilization} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis type="number" domain={[0, 120]} tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" unit="%" />
-              <YAxis type="category" dataKey="name" tick={{ fontSize: 10 }} stroke="hsl(var(--muted-foreground))" width={isMobile ? 56 : 80} />
-              <Tooltip contentStyle={chartTooltipStyle} />
-              <Bar dataKey="utilization" radius={[0, 4, 4, 0]} name="Utilization %">
-                {metrics.resourceUtilization.map((entry) => (
-                  <Cell key={entry.id} fill={entry.utilization > 100 ? '#ef4444' : entry.utilization > 90 ? '#f59e0b' : '#10b981'} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="min-w-0 animate-fade-in" style={{ animationDelay: '0.3s' }}>
         <CardHeader className="pb-2"><CardTitle className="text-base sm:text-lg">Monthly Spending Trend</CardTitle></CardHeader>
         <CardContent className="min-w-0">
           <div className="h-[220px] w-full min-w-0 sm:h-[280px]">
@@ -113,7 +92,7 @@ export function DashboardCharts({ metrics }: DashboardChartsProps) {
         </CardContent>
       </Card>
 
-      <Card className="min-w-0 animate-fade-in lg:col-span-2" style={{ animationDelay: '0.4s' }}>
+      <Card className="min-w-0 animate-fade-in lg:col-span-2" style={{ animationDelay: '0.3s' }}>
         <CardHeader className="pb-2"><CardTitle className="text-base sm:text-lg">Profitability Analysis</CardTitle></CardHeader>
         <CardContent className="min-w-0">
           <div className="h-[220px] w-full min-w-0 sm:h-[280px]">
@@ -127,25 +106,6 @@ export function DashboardCharts({ metrics }: DashboardChartsProps) {
               <Bar dataKey="revenue" fill="#10b981" radius={[4, 4, 0, 0]} name="Revenue" />
               <Bar dataKey="actualCost" fill={primaryFill} radius={[4, 4, 0, 0]} name="Cost" />
               <Bar dataKey="profit" fill={accentFill} radius={[4, 4, 0, 0]} name="Profit" />
-            </BarChart>
-          </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="min-w-0 animate-fade-in lg:col-span-2" style={{ animationDelay: '0.5s' }}>
-        <CardHeader className="pb-2"><CardTitle className="text-base sm:text-lg">Employee Allocation (Hours)</CardTitle></CardHeader>
-        <CardContent className="min-w-0">
-          <div className="h-[220px] w-full min-w-0 sm:h-[280px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={metrics.employeeAllocation}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
-              <YAxis tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" />
-              <Tooltip contentStyle={chartTooltipStyle} />
-              <Legend />
-              <Bar dataKey="allocated" stackId="a" fill={accentFill} name="Allocated" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="available" stackId="a" fill="hsl(var(--muted))" name="Available" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
           </div>

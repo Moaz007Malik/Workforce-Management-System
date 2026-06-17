@@ -81,6 +81,37 @@ export async function getDashboardMetrics() {
     Completed: tasks.filter((t) => t.kanbanStatus === 'Completed').length,
   };
 
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((t) => t.status === 'Completed').length;
+  const inProgressTasks = tasks.filter((t) => t.status === 'In Progress').length;
+  const blockedTasks = tasks.filter((t) => t.status === 'Blocked').length;
+
+  const topEmployees = [...employeeUtilization]
+    .sort((a, b) => b.utilization - a.utilization)
+    .slice(0, 5)
+    .map((e) => ({
+      id: e.id,
+      name: e.name,
+      department: e.department,
+      utilization: e.utilization,
+      allocatedHours: e.allocatedHours,
+      capacityHours: e.capacityHours,
+    }));
+
+  const deptCounts = {};
+  employees.forEach((e) => {
+    const dept = e.department || e.businessUnit || 'Other';
+    deptCounts[dept] = (deptCounts[dept] || 0) + 1;
+  });
+  const employeesByDepartment = Object.entries(deptCounts)
+    .map(([department, count]) => ({ department, count }))
+    .sort((a, b) => b.count - a.count);
+
+  const employeesByStatus = ['Available', 'Allocated', 'Fully Allocated', 'On Leave'].map((status) => ({
+    status,
+    count: employees.filter((e) => e.status === status).length,
+  }));
+
   const overallProfit = calculateProfitability(totalRevenue, totalActualCost);
   const now = new Date();
   const countProjectsInMonth = (year, month) =>
@@ -114,6 +145,10 @@ export async function getDashboardMetrics() {
       projectGrowthTrend,
       monthlyCostTrend: monthlyTrend,
       budgetUtilizationTrend: monthlyTrend,
+      totalTasks,
+      completedTasks,
+      inProgressTasks,
+      blockedTasks,
     },
     projectStatusDistribution,
     budgetVsActual: projectCosts.map((p) => ({
@@ -126,6 +161,9 @@ export async function getDashboardMetrics() {
     monthlySpending,
     taskProgress,
     kanbanCounts,
+    topEmployees,
+    employeesByDepartment,
+    employeesByStatus,
     projectProfitability: projectCosts,
     employeeAllocation: employees.map((e) => {
       const util = employeeUtilization.find((u) => u.id === e.id);

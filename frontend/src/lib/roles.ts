@@ -193,64 +193,64 @@ export function canManageAssignments(systemRole: SystemRole): boolean {
 
 const hrNav: PcpNavItem[] = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { to: '/hr', icon: UserCircle, label: 'Employees' },
   { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
-  { to: '/pcp/all', icon: Building2, label: 'PCPs' },
   { to: '/timesheets', icon: Clock, label: 'Timesheets' },
+  { to: '/hr', icon: UserCircle, label: 'Employees' },
   { to: '/reports', icon: BarChart3, label: 'Reports' },
   { to: '/settings', icon: Settings, label: 'Settings' },
+  { to: '/pcp/all', icon: Building2, label: 'PCPs' },
 ]
 
 /** Admin sees all HR items plus full system and administration */
 const adminNav: PcpNavItem[] = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
+  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/hr', icon: UserCircle, label: 'Employees' },
   { to: '/projects', icon: FolderKanban, label: 'Projects' },
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/resources', icon: Users, label: 'Resources' },
-  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
-  { to: '/pcp/all', icon: Building2, label: 'PCPs' },
-  { to: '/pcp/approval', icon: CheckSquare, label: 'Approval Queue' },
-  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/budgets', icon: DollarSign, label: 'Budgets' },
   { to: '/reports', icon: BarChart3, label: 'Reports' },
-  { to: '/pcp/revisions', icon: History, label: 'Revision History' },
+  { to: '/pcp/assistant', icon: Bot, label: 'AI Assistant' },
   { to: '/admin', icon: Shield, label: 'Administration' },
   { to: '/admin?tab=masters', icon: Database, label: 'Masters' },
-  { to: '/pcp/assistant', icon: Bot, label: 'AI Assistant' },
   { to: '/settings', icon: Settings, label: 'Settings' },
+  { to: '/pcp/all', icon: Building2, label: 'PCPs' },
+  { to: '/pcp/approval', icon: CheckSquare, label: 'Approval Queue' },
+  { to: '/pcp/revisions', icon: History, label: 'Revision History' },
 ]
 
 const employeeNav: PcpNavItem[] = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
+  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/hr', icon: UserCircle, label: 'My Profile' },
   { to: '/tasks', icon: CheckSquare, label: 'My Tasks' },
   { to: '/projects', icon: FolderKanban, label: 'My Projects' },
-  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
-  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 
 const deptManagerNav: PcpNavItem[] = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
+  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/projects', icon: FolderKanban, label: 'Projects' },
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/resources', icon: Users, label: 'Resources' },
   { to: '/hr', icon: UserCircle, label: 'Team' },
-  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
-  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/reports', icon: BarChart3, label: 'Reports' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 
 const baseNav: PcpNavItem[] = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
+  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/projects', icon: FolderKanban, label: 'Projects' },
   { to: '/tasks', icon: CheckSquare, label: 'Tasks' },
   { to: '/resources', icon: Users, label: 'Resources' },
   { to: '/hr', icon: UserCircle, label: 'HR' },
-  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance' },
-  { to: '/timesheets', icon: Clock, label: 'Timesheets' },
   { to: '/budgets', icon: DollarSign, label: 'Budgets' },
   { to: '/reports', icon: BarChart3, label: 'Reports' },
   { to: '/settings', icon: Settings, label: 'Settings' },
