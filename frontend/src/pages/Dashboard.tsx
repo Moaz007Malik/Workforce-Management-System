@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import {
   FolderKanban, Users, DollarSign, TrendingUp, Wallet, Download,
-  CheckSquare, AlertTriangle, UserCheck,
+  CheckSquare, AlertTriangle, UserCheck, ClipboardCheck, Clock,
 } from 'lucide-react'
 import { DashboardExportDialog } from '@/components/dashboard/DashboardExportDialog'
 import { EmployeeDashboard } from '@/components/dashboard/EmployeeDashboard'
+import { EmployeeAttendanceTimesheetCharts } from '@/components/dashboard/EmployeeAttendanceTimesheetCharts'
 import { KPICard } from '@/components/dashboard/KPICard'
 import { DashboardCharts } from '@/components/dashboard/DashboardCharts'
 import { DashboardWorkforceCharts } from '@/components/dashboard/DashboardWorkforceCharts'
+import { DashboardAttendanceTimesheetCharts } from '@/components/dashboard/DashboardAttendanceTimesheetCharts'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useDashboardStore } from '@/stores/useDashboardStore'
@@ -79,6 +81,11 @@ export function Dashboard() {
           utilization={employeeData.utilization}
           allocatedHours={employeeData.allocatedHours}
           capacityHours={employeeData.employee.capacityHours}
+          projectMap={projectMap}
+        />
+        <EmployeeAttendanceTimesheetCharts
+          attendance={employeeData.attendance ?? []}
+          timesheets={employeeData.timesheets}
           projectMap={projectMap}
         />
       </div>
@@ -186,7 +193,21 @@ export function Dashboard() {
             subtitle="Needs attention"
           />
         )}
+        <KPICard
+          title="Present Today"
+          value={kpis.presentToday ?? 0}
+          icon={ClipboardCheck}
+          subtitle={`${kpis.absentToday ?? 0} absent · ${kpis.pendingAttendance ?? 0} pending approval`}
+        />
+        <KPICard
+          title="Hours This Week"
+          value={kpis.hoursLoggedThisWeek ?? 0}
+          icon={Clock}
+          subtitle={`${kpis.pendingTimesheets ?? 0} timesheets pending`}
+        />
       </div>
+
+      <DashboardAttendanceTimesheetCharts metrics={metrics} />
 
       <DashboardWorkforceCharts metrics={metrics} showProjects={!isHr} />
 

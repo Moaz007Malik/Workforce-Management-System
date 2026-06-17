@@ -10,14 +10,96 @@ const employeeRepo = repos.employees;
 const taskRepo = repos.tasks;
 const timesheetRepo = repos.timesheets;
 const budgetRepo = repos.budgets;
+const attendanceRepo = repos.attendance;
+
+const ATTENDANCE_STATUSES = ['Present', 'Absent', 'Late', 'Half Day', 'On Leave'];
+const TIMESHEET_STATUSES = ['Pending', 'Approved', 'Rejected'];
+
+function dateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function monthKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function isWithinLastDays(dateStr, days) {
+  const end = new Date();
+  end.setHours(23, 59, 59, 999);
+  const start = new Date();
+  start.setDate(start.getDate() - (days - 1));
+  start.setHours(0, 0, 0, 0);
+  const d = new Date(dateStr);
+  return d >= start && d <= end;
+}
+
+function getAttendanceDailyTrend(attendance, employees, days = 14) {
+  const result = [];
+  const now = new Date();
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const dayRecords = attendance.filter((a) => a.date === key);
+    const present = dayRecords.filter((a) => ['Present', 'Late', 'Half Day'].includes(a.status)).length;
+    const absent = dayRecords.filter((a) => a.status === 'Absent').length;
+    const onLeave = dayRecords.filter((a) => a.status === 'On Leave').length;
+    const expected = employees.filter((e) => e.active !== false && !e.onLeave).length;
+    result.push({
+      date: d.toLocaleDateString('default', { month: 'short', day: 'numeric' }),
+      present,
+      absent,
+      onLeave,
+      expected,
+    });
+  }
+  return result;
+}
+
+function getMonthlyHoursLogged(timesheets, months = 6) {
+  const result = [];
+  const now = new Date();
+  for (let i = months - 1; i >= 0; i--) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = monthKey(date);
+    const monthEntries = timesheets.filter((ts) => monthKey(new Date(ts.date)) === key);
+    const approved = monthEntries.filter((ts) => ts.status === 'Approved');
+    const pending = monthEntries.filter((ts) => ts.status === 'Pending');
+    result.push({
+      month: date.toLocaleString('default', { month: 'short', year: '2-digit' }),
+      approvedHours: Math.round(approved.reduce((s, ts) => s + (ts.hoursWorked || 0), 0) * 10) / 10,
+      pendingHours: Math.round(pending.reduce((s, ts) => s + (ts.hoursWorked || 0), 0) * 10) / 10,
+      totalHours: Math.round(monthEntries.reduce((s, ts) => s + (ts.hoursWorked || 0), 0) * 10) / 10,
+    });
+  }
+  return result;
+}
+
+function getTimesheetHoursByProject(timesheets, projects, limit = 6) {
+  const hoursByProject = {};
+  timesheets
+    .filter((ts) => ts.status === 'Approved')
+    .forEach((ts) => {
+      hoursByProject[ts.projectId] = (hoursByProject[ts.projectId] || 0) + (ts.hoursWorked || 0);
+    });
+  return Object.entries(hoursByProject)
+    .map(([projectId, hours]) => ({
+      projectId,
+      name: projects.find((p) => p.id === projectId)?.name || 'Unknown',
+      hours: Math.round(hours * 10) / 10,
+    }))
+    .sort((a, b) => b.hours - a.hours)
+    .slice(0, limit);
+}
 
 export async function getDashboardMetrics() {
-  const [projects, employees, tasks, timesheets, budgets] = await Promise.all([
+  const [projects, employees, tasks, timesheets, budgets, attendance] = await Promise.all([
     projectRepo.getAll(),
     employeeRepo.getAll(),
     taskRepo.getAll(),
     timesheetRepo.getAll(),
     budgetRepo.getAll(),
+    attendanceRepo.getAll(),
   ]);
 
   const activeProjects = projects.filter((p) => p.status === 'Active');
@@ -112,6 +194,39 @@ export async function getDashboardMetrics() {
     count: employees.filter((e) => e.status === status).length,
   }));
 
+  const todayKey = dateKey(new Date());
+  const todayAttendance = attendance.filter((a) => a.date === todayKey);
+  const recentAttendance = attendance.filter((a) => isWithinLastDays(a.date, 30));
+
+  const attendanceStatusDistribution = ATTENDANCE_STATUSES.map((status) => ({
+    status,
+    count: recentAttendance.filter((a) => a.status === status).length,
+  }));
+
+  const attendanceDailyTrend = getAttendanceDailyTrend(attendance, employees, 14);
+
+  const timesheetStatusDistribution = TIMESHEET_STATUSES.map((status) => ({
+    status,
+    count: timesheets.filter((ts) => ts.status === status).length,
+  }));
+
+  const monthlyHoursLogged = getMonthlyHoursLogged(timesheets, 6);
+  const timesheetHoursByProject = getTimesheetHoursByProject(timesheets, projects);
+
+  const weekStart = new Date();
+  weekStart.setDate(weekStart.getDate() - 6);
+  weekStart.setHours(0, 0, 0, 0);
+  const hoursLoggedThisWeek = Math.round(
+    timesheets
+      .filter((ts) => new Date(ts.date) >= weekStart)
+      .reduce((s, ts) => s + (ts.hoursWorked || 0), 0) * 10,
+  ) / 10;
+
+  const presentToday = todayAttendance.filter((a) => ['Present', 'Late', 'Half Day'].includes(a.status)).length;
+  const absentToday = todayAttendance.filter((a) => a.status === 'Absent').length;
+  const pendingTimesheets = timesheets.filter((ts) => ts.status === 'Pending').length;
+  const pendingAttendance = todayAttendance.filter((a) => a.approvalStatus === 'Pending').length;
+
   const overallProfit = calculateProfitability(totalRevenue, totalActualCost);
   const now = new Date();
   const countProjectsInMonth = (year, month) =>
@@ -149,6 +264,11 @@ export async function getDashboardMetrics() {
       completedTasks,
       inProgressTasks,
       blockedTasks,
+      presentToday,
+      absentToday,
+      pendingTimesheets,
+      pendingAttendance,
+      hoursLoggedThisWeek,
     },
     projectStatusDistribution,
     budgetVsActual: projectCosts.map((p) => ({
@@ -164,6 +284,11 @@ export async function getDashboardMetrics() {
     topEmployees,
     employeesByDepartment,
     employeesByStatus,
+    attendanceStatusDistribution,
+    attendanceDailyTrend,
+    timesheetStatusDistribution,
+    monthlyHoursLogged,
+    timesheetHoursByProject,
     projectProfitability: projectCosts,
     employeeAllocation: employees.map((e) => {
       const util = employeeUtilization.find((u) => u.id === e.id);

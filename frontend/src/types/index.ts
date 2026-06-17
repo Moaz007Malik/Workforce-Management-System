@@ -229,6 +229,11 @@ export interface DashboardMetrics {
     completedTasks?: number
     inProgressTasks?: number
     blockedTasks?: number
+    presentToday?: number
+    absentToday?: number
+    pendingTimesheets?: number
+    pendingAttendance?: number
+    hoursLoggedThisWeek?: number
   }
   projectStatusDistribution: { status: string; count: number }[]
   budgetVsActual: { name: string; budget: number; actual: number; planned: number }[]
@@ -239,6 +244,11 @@ export interface DashboardMetrics {
   topEmployees?: { id: string; name: string; department: string; utilization: number; allocatedHours: number; capacityHours: number }[]
   employeesByDepartment?: { department: string; count: number }[]
   employeesByStatus?: { status: string; count: number }[]
+  attendanceStatusDistribution?: { status: string; count: number }[]
+  attendanceDailyTrend?: { date: string; present: number; absent: number; onLeave: number; expected: number }[]
+  timesheetStatusDistribution?: { status: string; count: number }[]
+  monthlyHoursLogged?: { month: string; approvedHours: number; pendingHours: number; totalHours: number }[]
+  timesheetHoursByProject?: { projectId: string; name: string; hours: number }[]
   projectProfitability: { projectId: string; projectName: string; budget: number; plannedCost: number; actualCost: number; remaining: number; consumption: number; health: string; revenue: number; profit: number; margin: number }[]
   employeeAllocation: { name: string; allocated: number; available: number }[]
 }
